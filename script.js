@@ -332,3 +332,26 @@ window.portfolioFunctions = {
     updateSkillLevel,
     addNewProject
 }; 
+
+// Bloqueo de panel de desarrollador con mensaje de derechos reservados
+(function() {
+    function showDevWarning() {
+        alert('Este portafolio tiene derechos reservados. El acceso al panel de desarrollador está restringido.');
+    }
+    document.addEventListener('keydown', function(e) {
+        // F12
+        if (e.keyCode === 123) {
+            showDevWarning();
+            e.preventDefault();
+            return false;
+        }
+        // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        if ((e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) ||
+            (e.ctrlKey && e.keyCode === 85)) {
+            showDevWarning();
+            e.preventDefault();
+            return false;
+        }
+    });
+    // No bloquear clic derecho
+})(); 
