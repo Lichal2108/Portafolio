@@ -246,8 +246,303 @@ function animateSectionsOnScroll() {
     });
 }
 
+// Protección de derechos de autor - Detectar acceso desde Google
+function checkReferrerAndProtect() {
+    const referrer = document.referrer;
+    const isFromGoogle = referrer.includes('google.com') || 
+                        referrer.includes('google.pe') || 
+                        referrer.includes('google.co') ||
+                        referrer.includes('google.') ||
+                        referrer.includes('bing.com') ||
+                        referrer.includes('yahoo.com');
+    
+    if (isFromGoogle) {
+        // Ocultar todo el contenido original
+        document.body.style.display = 'none';
+        
+        // Limpiar el body completamente
+        document.body.innerHTML = '';
+        document.body.style.display = 'block';
+        
+        // Crear overlay de protección
+        const overlay = document.createElement('div');
+        overlay.id = 'copyright-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            z-index: 2147483647;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        `;
+        
+        overlay.innerHTML = `
+            <div style="max-width: 600px; background: rgba(0,0,0,0.9); padding: 3rem; border-radius: 15px; border: 2px solid #ff6b6b; box-shadow: 0 0 50px rgba(255,107,107,0.3);">
+                <h1 style="color: #ff6b6b; font-size: 2.5rem; margin-bottom: 1rem; text-transform: uppercase; user-select: none;">
+                    ⚠️ Acceso Restringido
+                </h1>
+                <h2 style="color: #ffd93d; font-size: 1.8rem; margin-bottom: 2rem; user-select: none;">
+                    Derechos de Autor Protegidos
+                </h2>
+                <p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 2rem; user-select: none;">
+                    Este contenido está protegido por derechos de autor. El acceso desde motores de búsqueda no está permitido.
+                </p>
+                <div style="background: rgba(255,107,107,0.1); padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; user-select: none;">
+                    <p style="font-size: 1.1rem; color: #ffd93d;">
+                        <strong>Propietario:</strong> Richard Josué Pillaca Machaca<br>
+                        <strong>Derechos Reservados:</strong> © 2024<br>
+                        <strong>Contacto:</strong> richard232108@gmail.com
+                    </p>
+                </div>
+                <p style="font-size: 1rem; color: #ccc; user-select: none;">
+                    Para acceder a este contenido, contacta directamente al propietario.
+                </p>
+                <div style="margin-top: 2rem;">
+                    <button onclick="window.close()" style="
+                        background: #ff6b6b;
+                        color: white;
+                        border: none;
+                        padding: 12px 30px;
+                        border-radius: 25px;
+                        font-size: 1.1rem;
+                        cursor: pointer;
+                        margin: 0 10px;
+                        transition: all 0.3s ease;
+                        user-select: none;
+                    " onmouseover="this.style.background='#ff5252'" onmouseout="this.style.background='#ff6b6b'">
+                        Cerrar Ventana
+                    </button>
+                    <button onclick="window.history.back()" style="
+                        background: #4ecdc4;
+                        color: white;
+                        border: none;
+                        padding: 12px 30px;
+                        border-radius: 25px;
+                        font-size: 1.1rem;
+                        cursor: pointer;
+                        margin: 0 10px;
+                        transition: all 0.3s ease;
+                        user-select: none;
+                    " onmouseover="this.style.background='#45b7aa'" onmouseout="this.style.background='#4ecdc4'">
+                        Volver Atrás
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // Agregar al body
+        document.body.appendChild(overlay);
+        
+        // Prevenir scroll
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+        
+        // Protección contra inspección de elementos
+        let devtools = { open: false, orientation: null };
+        
+        // Detectar apertura de DevTools
+        setInterval(() => {
+            const threshold = 160;
+            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+            
+            if (widthThreshold || heightThreshold) {
+                if (!devtools.open) {
+                    devtools.open = true;
+                    devtools.orientation = widthThreshold ? 'vertical' : 'horizontal';
+                    // Redirigir a una página de error o mostrar mensaje
+                    window.location.href = 'about:blank';
+                }
+            } else {
+                devtools.open = false;
+                devtools.orientation = null;
+            }
+        }, 500);
+        
+        // Prevenir todas las teclas
+        document.addEventListener('keydown', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            return false;
+        }, true);
+        
+        // Prevenir clic derecho
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }, true);
+        
+        // Prevenir selección de texto
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        }, true);
+        
+        // Prevenir drag and drop
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        }, true);
+        
+        // Prevenir copiar
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            return false;
+        }, true);
+        
+        // Prevenir pegar
+        document.addEventListener('paste', function(e) {
+            e.preventDefault();
+            return false;
+        }, true);
+        
+        // Prevenir cortar
+        document.addEventListener('cut', function(e) {
+            e.preventDefault();
+            return false;
+        }, true);
+        
+        // Prevenir clics fuera del overlay
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        }, true);
+        
+        // Protección adicional contra F12 y otras teclas
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'C') ||
+                (e.ctrlKey && e.key === 'U') ||
+                (e.ctrlKey && e.key === 'S') ||
+                (e.ctrlKey && e.key === 'P')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }, true);
+        
+        // Prevenir acceso a la consola
+        console.log = console.warn = console.error = console.info = console.debug = function() {};
+        
+        // Protección contra debugger
+        setInterval(() => {
+            debugger;
+        }, 100);
+        
+        return true; // Indica que se activó la protección
+    }
+    return false; // No se activó la protección
+}
+
+// Función para manejar la descarga del CV con notificación
+function handleCVDownload() {
+    const cvButtons = document.querySelectorAll('.btn-cv');
+    
+    cvButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Crear elemento de descarga
+            const link = document.createElement('a');
+            link.href = 'RichardPillaca Portafolio.pdf';
+            link.download = 'RichardPillaca Portafolio.pdf';
+            link.style.display = 'none';
+            
+            // Agregar al DOM y hacer clic
+            document.body.appendChild(link);
+            link.click();
+            
+            // Remover el elemento
+            document.body.removeChild(link);
+            
+            // Mostrar notificación de descarga exitosa
+            showDownloadNotification();
+        });
+    });
+}
+
+// Función para mostrar notificación de descarga
+function showDownloadNotification() {
+    // Crear elemento de notificación
+    const notification = document.createElement('div');
+    notification.id = 'download-notification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        z-index: 10000;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+    `;
+    
+    notification.innerHTML = `
+        <i class="fas fa-check-circle" style="font-size: 18px; color: #fff;"></i>
+        <div>
+            <div style="font-weight: 600; margin-bottom: 2px;">¡Descarga Completada!</div>
+            <div style="font-size: 12px; opacity: 0.9;">Tu CV se ha descargado exitosamente</div>
+        </div>
+    `;
+    
+    // Agregar al body
+    document.body.appendChild(notification);
+    
+    // Animar entrada
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Remover después de 4 segundos
+    setTimeout(() => {
+        notification.style.transform = 'translateX(400px)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 4000);
+}
+
 // Inicializar todas las funciones cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
+    // Verificar protección de derechos de autor primero
+    if (checkReferrerAndProtect()) {
+        return; // Si se activó la protección, no continuar con el resto de funciones
+    }
+    
+    // Inicializar descarga del CV
+    handleCVDownload();
+    
     animateSkillBars();
     animateOnScroll();
     handleContactForm();
