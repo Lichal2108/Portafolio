@@ -480,6 +480,258 @@ function handleCVDownload() {
     });
 }
 
+// Sistema de traducción
+const translations = {
+    es: {
+        // Navegación
+        'inicio': 'Inicio',
+        'sobre-mi': 'Sobre Mí',
+        'habilidades': 'Habilidades',
+        'proyectos': 'Proyectos',
+        'contacto': 'Contacto',
+        
+        // Hero Section
+        'ingeniero-sistemas': 'Ingeniero de Sistemas',
+        'estudiante-8-ciclo': 'Estudiante del 8° ciclo en la Universidad Nacional Mayor de San Marcos',
+        'ver-proyectos': 'Ver Proyectos',
+        'contactar': 'Contactar',
+        'descargar-cv': 'Descargar CV',
+        
+        // Sobre Mí
+        'sobre-mi-titulo': 'Sobre Mí',
+        'sobre-mi-texto-1': 'Hola, soy Richard Pillaca, estudiante de Ingeniería de Sistemas en la Universidad Nacional Mayor de San Marcos. Apasionado por el desarrollo web, me especializo en la creación de aplicaciones modernas, seguras y escalables, utilizando tecnologías como Angular, React, Spring Boot, Python y PostgreSQL. Mi enfoque está en construir soluciones digitales que mejoren la experiencia del usuario y optimicen los procesos de negocio.',
+        'sobre-mi-texto-2': 'Me considero una persona proactiva, con gran capacidad de aprendizaje y adaptabilidad. Disfruto trabajar en equipo, liderar proyectos y enfrentar nuevos retos tecnológicos. Mi objetivo es seguir creciendo como desarrollador web, aportando valor a cada proyecto y manteniéndome siempre actualizado en las tendencias del sector.',
+        'datos-personales': 'Datos Personales',
+        'nombre': 'Nombre',
+        'formacion-profesional': 'Formación Profesional',
+        'cumpleanos': 'Cumpleaños',
+        'ubicacion': 'Ubicación',
+        'telefono': 'Teléfono',
+        'email': 'Email',
+        'cargo': 'Cargo',
+        'intereses': 'Intereses',
+        
+        // Educación
+        'educacion': 'Educación',
+        'ingenieria-sistemas': 'Ingeniería de Sistemas',
+        'universidad-san-marcos': 'Universidad Nacional Mayor de San Marcos',
+        '8-ciclo-en-curso': '8° Ciclo - En curso',
+        'curso-python': 'Curso de Python',
+        'camara-comercio-exterior': 'Cámara de Comercio Exterior',
+        'programacion-python-completado': 'Programación en Python - Completado',
+        'ingles-avanzado': 'Inglés Avanzado',
+        'brintanico': 'Brintánico',
+        'nivel-avanzado-completado': 'Nivel Avanzado - Completado',
+        
+        // Habilidades
+        'habilidades-blandas': 'Habilidades Blandas',
+        'habilidades-tecnicas': 'Habilidades Técnicas',
+        'lenguajes-programacion': 'Lenguajes de Programación',
+        'desarrollo-web': 'Desarrollo Web',
+        'bases-datos': 'Bases de Datos',
+        'herramientas-tecnologias': 'Herramientas y Tecnologías',
+        'herramientas-analisis-datos': 'Herramientas de Análisis de Datos',
+        
+        // Proyectos
+        'proyectos-repositorios': 'Proyectos y Repositorios',
+        'frontend-taller': 'Frontend del Sistema de Taller Automotriz',
+        'backend-taller': 'Backend del Sistema de Taller Automotriz',
+        'casa-inteligente': 'Casa Inteligente IoT',
+        'pagina-prueba-sucasaire': 'Página de Prueba Sucasaire',
+        'frontend-taller-desc': 'Interfaz de usuario moderna y responsiva que incluye dashboards y paneles gráficos interactivos para el análisis financiero y la gestión operativa del taller automotriz. Permite visualizar métricas clave, reportes y estadísticas en tiempo real para la toma de decisiones.',
+        'backend-taller-desc': 'API robusta y segura basada en arquitectura de microservicios, que gestiona la lógica de negocio, usuarios, inventario y servicios del taller. Implementa autenticación y autorización mediante JWT (JSON Web Tokens) para garantizar la seguridad y privacidad de los datos.',
+        'casa-inteligente-desc': 'Proyecto de automatización de una casa inteligente utilizando IoT y microcontrolador ESP32. Incluye sistema de detección contra incendios, monitoreo de ambientes a distancia y almacenamiento de datos en tiempo real con Firebase.',
+        'pagina-prueba-sucasaire-desc': 'Prototipo de página web de contacto para Sucasaire (empresa ficticia) que demuestra técnicas modernas de desarrollo web. Incluye formularios con validación en tiempo real, animaciones CSS, contadores dinámicos, sistema de notificaciones y diseño completamente responsivo para todos los dispositivos.',
+        
+        // Contacto
+        'trabajemos-juntos': '¡Trabajemos juntos!',
+        'interesado-practicas': 'Estoy interesado en oportunidades de prácticas profesionales donde pueda aplicar mis habilidades y seguir aprendiendo.',
+        'enviar-mensaje': 'Enviar Mensaje',
+        'nombre-placeholder': 'Nombre',
+        'email-placeholder': 'Email',
+        'asunto-placeholder': 'Asunto',
+        'mensaje-placeholder': 'Mensaje',
+        
+        // Footer
+        'derechos-reservados': 'Todos los derechos reservados.'
+    },
+    en: {
+        // Navigation
+        'inicio': 'Home',
+        'sobre-mi': 'About Me',
+        'habilidades': 'Skills',
+        'proyectos': 'Projects',
+        'contacto': 'Contact',
+        
+        // Hero Section
+        'ingeniero-sistemas': 'Systems Engineer',
+        'estudiante-8-ciclo': '8th cycle student at the National University of San Marcos',
+        'ver-proyectos': 'View Projects',
+        'contactar': 'Contact',
+        'descargar-cv': 'Download CV',
+        
+        // About Me
+        'sobre-mi-titulo': 'About Me',
+        'sobre-mi-texto-1': 'Hello, I am Richard Pillaca, a Systems Engineering student at the National University of San Marcos. Passionate about web development, I specialize in creating modern, secure, and scalable applications using technologies such as Angular, React, Spring Boot, Python, and PostgreSQL. My focus is on building digital solutions that improve user experience and optimize business processes.',
+        'sobre-mi-texto-2': 'I consider myself a proactive person with great learning capacity and adaptability. I enjoy working in teams, leading projects, and facing new technological challenges. My goal is to continue growing as a web developer, adding value to each project and always staying updated with industry trends.',
+        'datos-personales': 'Personal Information',
+        'nombre': 'Name',
+        'formacion-profesional': 'Professional Training',
+        'cumpleanos': 'Birthday',
+        'ubicacion': 'Location',
+        'telefono': 'Phone',
+        'email': 'Email',
+        'cargo': 'Position',
+        'intereses': 'Interests',
+        
+        // Education
+        'educacion': 'Education',
+        'ingenieria-sistemas': 'Systems Engineering',
+        'universidad-san-marcos': 'National University of San Marcos',
+        '8-ciclo-en-curso': '8th Cycle - In progress',
+        'curso-python': 'Python Course',
+        'camara-comercio-exterior': 'Foreign Trade Chamber',
+        'programacion-python-completado': 'Python Programming - Completed',
+        'ingles-avanzado': 'Advanced English',
+        'brintanico': 'Brintánico',
+        'nivel-avanzado-completado': 'Advanced Level - Completed',
+        
+        // Skills
+        'habilidades-blandas': 'Soft Skills',
+        'habilidades-tecnicas': 'Technical Skills',
+        'lenguajes-programacion': 'Programming Languages',
+        'desarrollo-web': 'Web Development',
+        'bases-datos': 'Databases',
+        'herramientas-tecnologias': 'Tools and Technologies',
+        'herramientas-analisis-datos': 'Data Analysis Tools',
+        
+        // Projects
+        'proyectos-repositorios': 'Projects and Repositories',
+        'frontend-taller': 'Automotive Workshop System Frontend',
+        'backend-taller': 'Automotive Workshop System Backend',
+        'casa-inteligente': 'Smart Home IoT',
+        'pagina-prueba-sucasaire': 'Sucasaire Test Page',
+        'frontend-taller-desc': 'Modern and responsive user interface that includes interactive dashboards and graphical panels for financial analysis and operational management of the automotive workshop. Allows visualization of key metrics, reports and real-time statistics for decision making.',
+        'backend-taller-desc': 'Robust and secure API based on microservices architecture that manages business logic, users, inventory and workshop services. Implements authentication and authorization through JWT (JSON Web Tokens) to ensure data security and privacy.',
+        'casa-inteligente-desc': 'Smart home automation project using IoT and ESP32 microcontroller. Includes fire detection system, remote environment monitoring and real-time data storage with Firebase.',
+        'pagina-prueba-sucasaire-desc': 'Contact page prototype for Sucasaire (fictional company) that demonstrates modern web development techniques. Includes forms with real-time validation, CSS animations, dynamic counters, notification system and fully responsive design for all devices.',
+        
+        // Contact
+        'trabajemos-juntos': 'Let\'s work together!',
+        'interesado-practicas': 'I am interested in internship opportunities where I can apply my skills and continue learning.',
+        'enviar-mensaje': 'Send Message',
+        'nombre-placeholder': 'Name',
+        'email-placeholder': 'Email',
+        'asunto-placeholder': 'Subject',
+        'mensaje-placeholder': 'Message',
+        
+        // Footer
+        'derechos-reservados': 'All rights reserved.'
+    }
+};
+
+// Función para cambiar idioma
+function changeLanguage(lang) {
+    // Actualizar botones de idioma
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+    
+    // Traducir contenido
+    const elements = document.querySelectorAll('[data-translate]');
+    elements.forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang] && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
+    });
+    
+    // Traducir placeholders
+    const inputs = document.querySelectorAll('input[data-translate-placeholder], textarea[data-translate-placeholder]');
+    inputs.forEach(input => {
+        const key = input.getAttribute('data-translate-placeholder');
+        if (translations[lang] && translations[lang][key]) {
+            input.placeholder = translations[lang][key];
+        }
+    });
+    
+    // Guardar preferencia de idioma
+    localStorage.setItem('preferred-language', lang);
+    
+    // Mostrar notificación de cambio de idioma
+    showLanguageNotification(lang);
+}
+
+// Función para mostrar notificación de cambio de idioma
+function showLanguageNotification(lang) {
+    const notification = document.createElement('div');
+    notification.id = 'language-notification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        z-index: 10000;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+    `;
+    
+    const langText = lang === 'es' ? 'Español' : 'English';
+    const flagSrc = lang === 'es' ? 'BanderaPeruParaCambiarAIdiomaEspañol.svg' : 'BanderaPeruParaCambiarAIdiomaIngles.svg';
+    
+    notification.innerHTML = `
+        <img src="${flagSrc}" alt="${langText}" style="width: 20px; height: 20px; border-radius: 50%;">
+        <div>
+            <div style="font-weight: 600; margin-bottom: 2px;">Idioma cambiado</div>
+            <div style="font-size: 12px; opacity: 0.9;">Language changed to ${langText}</div>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    setTimeout(() => {
+        notification.style.transform = 'translateX(400px)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Función para inicializar el sistema de idioma
+function initializeLanguageSystem() {
+    // Agregar event listeners a los botones de idioma
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const lang = this.getAttribute('data-lang');
+            changeLanguage(lang);
+        });
+    });
+    
+    // Cargar idioma preferido del localStorage
+    const savedLang = localStorage.getItem('preferred-language');
+    if (savedLang && savedLang !== 'es') {
+        changeLanguage(savedLang);
+    }
+}
+
 // Función para mostrar notificación de descarga
 function showDownloadNotification() {
     // Crear elemento de notificación
@@ -542,6 +794,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Inicializar descarga del CV
     handleCVDownload();
+    
+    // Inicializar sistema de idioma
+    initializeLanguageSystem();
     
     animateSkillBars();
     animateOnScroll();

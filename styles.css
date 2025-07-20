@@ -146,6 +146,43 @@ body {
     box-shadow: 0 5px 20px var(--shadow-color);
 }
 
+/* Selector de idioma */
+.language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+.lang-btn {
+    background: none;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lang-btn:hover {
+    border-color: var(--netflix-red);
+    transform: scale(1.1);
+}
+
+.lang-btn.active {
+    border-color: var(--netflix-red);
+    box-shadow: 0 0 10px rgba(229, 9, 20, 0.3);
+}
+
+.flag-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 /* Hero Section */
 .hero {
     position: relative;
@@ -826,6 +863,16 @@ section {
     
     .education-item .education-logo {
         margin-bottom: 1rem;
+    }
+    
+    .language-switcher {
+        margin-left: 0;
+        margin-top: 15px;
+    }
+    
+    .flag-icon {
+        width: 20px;
+        height: 20px;
     }
 }
 

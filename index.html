@@ -21,12 +21,20 @@
                 </div>
             </div>
             <ul class="nav-menu">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#sobre-mi">Sobre Mí</a></li>
-                <li><a href="#habilidades">Habilidades</a></li>
-                <li><a href="#proyectos">Proyectos</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#inicio" data-translate="inicio">Inicio</a></li>
+                <li><a href="#sobre-mi" data-translate="sobre-mi">Sobre Mí</a></li>
+                <li><a href="#habilidades" data-translate="habilidades">Habilidades</a></li>
+                <li><a href="#proyectos" data-translate="proyectos">Proyectos</a></li>
+                <li><a href="#contacto" data-translate="contacto">Contacto</a></li>
             </ul>
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="es" title="Español">
+                    <img src="BanderaPeruParaCambiarAIdiomaEspañol.svg" alt="Español" class="flag-icon">
+                </button>
+                <button class="lang-btn" data-lang="en" title="English">
+                    <img src="BanderaPeruParaCambiarAIdiomaIngles.svg" alt="English" class="flag-icon">
+                </button>
+            </div>
             <div class="nav-toggle">
                 <span></span>
                 <span></span>
@@ -43,12 +51,12 @@
         <div class="hero-content">
             <div class="hero-text">
                 <h1>Richard Josué Pillaca Machaca</h1>
-                <h2>Ingeniero de Sistemas</h2>
-                <p>Estudiante del 8° ciclo en la Universidad Nacional Mayor de San Marcos</p>
+                <h2 data-translate="ingeniero-sistemas">Ingeniero de Sistemas</h2>
+                <p data-translate="estudiante-8-ciclo">Estudiante del 8° ciclo en la Universidad Nacional Mayor de San Marcos</p>
                 <div class="hero-buttons">
-                    <a href="#proyectos" class="btn btn-primary">Ver Proyectos</a>
-                    <a href="#contacto" class="btn btn-secondary">Contactar</a>
-                    <a href="#" class="btn btn-primary btn-cv">Descargar CV <i class="fas fa-download"></i></a>
+                    <a href="#proyectos" class="btn btn-primary" data-translate="ver-proyectos">Ver Proyectos</a>
+                    <a href="#contacto" class="btn btn-secondary" data-translate="contactar">Contactar</a>
+                    <a href="#" class="btn btn-primary btn-cv" data-translate="descargar-cv">Descargar CV <i class="fas fa-download"></i></a>
                 </div>
                 <div class="hero-social-links" style="margin-top: 1.5rem; display: flex; gap: 1.2rem;">
                     <a href="https://github.com/Lichal2108" target="_blank" aria-label="GitHub" style="color:#fff; font-size:2rem;"><i class="fab fa-github"></i></a>
@@ -65,26 +73,26 @@
     <!-- Sobre Mí -->
     <section id="sobre-mi" class="about">
         <div class="container">
-            <h2 class="section-title">Sobre Mí</h2>
+            <h2 class="section-title" data-translate="sobre-mi-titulo">Sobre Mí</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Hola, soy Richard Pillaca, estudiante de Ingeniería de Sistemas en la Universidad Nacional Mayor de San Marcos. Apasionado por el desarrollo web, me especializo en la creación de aplicaciones modernas, seguras y escalables, utilizando tecnologías como Angular, React, Spring Boot, Python y PostgreSQL. Mi enfoque está en construir soluciones digitales que mejoren la experiencia del usuario y optimicen los procesos de negocio.</p>
-                    <p>Me considero una persona proactiva, con gran capacidad de aprendizaje y adaptabilidad. Disfruto trabajar en equipo, liderar proyectos y enfrentar nuevos retos tecnológicos. Mi objetivo es seguir creciendo como desarrollador web, aportando valor a cada proyecto y manteniéndome siempre actualizado en las tendencias del sector.</p>
+                    <p data-translate="sobre-mi-texto-1">Hola, soy Richard Pillaca, estudiante de Ingeniería de Sistemas en la Universidad Nacional Mayor de San Marcos. Apasionado por el desarrollo web, me especializo en la creación de aplicaciones modernas, seguras y escalables, utilizando tecnologías como Angular, React, Spring Boot, Python y PostgreSQL. Mi enfoque está en construir soluciones digitales que mejoren la experiencia del usuario y optimicen los procesos de negocio.</p>
+                    <p data-translate="sobre-mi-texto-2">Me considero una persona proactiva, con gran capacidad de aprendizaje y adaptabilidad. Disfruto trabajar en equipo, liderar proyectos y enfrentar nuevos retos tecnológicos. Mi objetivo es seguir creciendo como desarrollador web, aportando valor a cada proyecto y manteniéndome siempre actualizado en las tendencias del sector.</p>
                     <div class="personal-info personal-info-grid">
                         <div class="personal-info-col">
-                            <h3>Datos Personales</h3>
+                            <h3 data-translate="datos-personales">Datos Personales</h3>
                             <ul>
-                                <li><strong>Nombre:</strong> Richard Pillaca</li>
-                                <li><strong>Formación Profesional:</strong> Ingeniería de Sistemas e Informática</li>
-                                <li><strong>Cumpleaños:</strong> 21-08-2003</li>
-                                <li><strong>Ubicación:</strong> Lima, Perú</li>
-                                <li><strong>Teléfono:</strong> +51 919555055</li>
-                                <li><strong>Email:</strong> richard232108@gmail.com</li>
-                                <li><strong>Cargo:</strong> FREELANCER</li>
+                                <li><strong data-translate="nombre">Nombre:</strong> Richard Pillaca</li>
+                                <li><strong data-translate="formacion-profesional">Formación Profesional:</strong> Ingeniería de Sistemas e Informática</li>
+                                <li><strong data-translate="cumpleanos">Cumpleaños:</strong> 21-08-2003</li>
+                                <li><strong data-translate="ubicacion">Ubicación:</strong> Lima, Perú</li>
+                                <li><strong data-translate="telefono">Teléfono:</strong> +51 919555055</li>
+                                <li><strong data-translate="email">Email:</strong> richard232108@gmail.com</li>
+                                <li><strong data-translate="cargo">Cargo:</strong> FREELANCER</li>
                             </ul>
                         </div>
                         <div class="personal-info-col">
-                            <h3>Intereses</h3>
+                            <h3 data-translate="intereses">Intereses</h3>
                             <div class="interests-icons">
                                 <div class="interest"><i class="fas fa-microchip"></i><span>Tech</span></div>
                                 <div class="interest"><i class="fab fa-react"></i><span>React</span></div>
@@ -100,7 +108,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="btn btn-primary btn-cv">Descargar CV <i class="fas fa-download"></i></a>
+                    <a href="#" class="btn btn-primary btn-cv" data-translate="descargar-cv">Descargar CV <i class="fas fa-download"></i></a>
                 </div>
             </div>
         </div>
@@ -109,7 +117,7 @@
     <!-- Educación -->
     <section id="educacion" class="education-section">
         <div class="container">
-            <h2 class="section-title">Educación</h2>
+            <h2 class="section-title" data-translate="educacion">Educación</h2>
             <div class="education">
                 <div class="education-item">
                     <img src="unmsm-universidad-nacional-mayor-san-marcos.jpg" alt="UNMSM" class="education-logo">
@@ -142,7 +150,7 @@
     <!-- Habilidades Blandas -->
     <section class="skills">
         <div class="container">
-            <h2 class="section-title">Habilidades Blandas</h2>
+            <h2 class="section-title" data-translate="habilidades-blandas">Habilidades Blandas</h2>
             <div class="skills-grid soft-skills-grid">
                 <div class="skill-category">
                     <div class="skill-item">
@@ -236,10 +244,10 @@
     <!-- Habilidades -->
     <section id="habilidades" class="skills">
         <div class="container">
-            <h2 class="section-title">Habilidades Técnicas</h2>
+            <h2 class="section-title" data-translate="habilidades-tecnicas">Habilidades Técnicas</h2>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3>Lenguajes de Programación</h3>
+                    <h3 data-translate="lenguajes-programacion">Lenguajes de Programación</h3>
                     <div class="skill-item">
                         <div class="skill-info">
                             <span>Java</span>
@@ -279,7 +287,7 @@
                 </div>
 
                 <div class="skill-category">
-                    <h3>Desarrollo Web</h3>
+                    <h3 data-translate="desarrollo-web">Desarrollo Web</h3>
                     <div class="skill-item">
                         <div class="skill-info">
                             <span>HTML/CSS</span>
@@ -319,7 +327,7 @@
                 </div>
 
                 <div class="skill-category">
-                    <h3>Bases de Datos</h3>
+                    <h3 data-translate="bases-datos">Bases de Datos</h3>
                     <div class="skill-item">
                         <div class="skill-info">
                             <span>MySQL</span>
@@ -350,7 +358,7 @@
                 </div>
 
                 <div class="skill-category">
-                    <h3>Herramientas y Tecnologías</h3>
+                    <h3 data-translate="herramientas-tecnologias">Herramientas y Tecnologías</h3>
                     <div class="skill-item">
                         <div class="skill-info">
                             <span>Git/GitHub</span>
@@ -390,7 +398,7 @@
                 </div>
 
                 <div class="skill-category">
-                    <h3>Herramientas de Análisis de Datos</h3>
+                    <h3 data-translate="herramientas-analisis-datos">Herramientas de Análisis de Datos</h3>
                     <div class="skill-item">
                         <div class="skill-info">
                             <span>Tableau</span>
@@ -426,15 +434,34 @@
     <!-- Proyectos/Repositorios -->
     <section id="proyectos" class="projects">
         <div class="container">
-            <h2 class="section-title">Proyectos y Repositorios</h2>
+            <h2 class="section-title" data-translate="proyectos-repositorios">Proyectos y Repositorios</h2>
             <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="imagenPaginaPrueba.avif" alt="Página de Prueba Sucasaire">
+                    </div>
+                    <div class="project-content">
+                        <h3 data-translate="pagina-prueba-sucasaire">Página de Prueba Sucasaire</h3>
+                        <p data-translate="pagina-prueba-sucasaire-desc">Prototipo de página web de contacto para Sucasaire (empresa ficticia) que demuestra técnicas modernas de desarrollo web. Incluye formularios con validación en tiempo real, animaciones CSS, contadores dinámicos, sistema de notificaciones y diseño completamente responsivo para todos los dispositivos.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript ES6+</span>
+                            <span class="tech-tag">Responsive Design</span>
+                            <span class="tech-tag">Formularios</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/Lichal2108/PaginaDePruebaSucasaire.git" class="btn btn-small" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="project-card">
                     <div class="project-image">
                         <img src="tallerAutomotrizFrontEnd.webp" alt="Frontend Taller Automotriz">
                     </div>
                     <div class="project-content">
-                        <h3>Frontend del Sistema de Taller Automotriz</h3>
-                        <p>Interfaz de usuario moderna y responsiva que incluye dashboards y paneles gráficos interactivos para el análisis financiero y la gestión operativa del taller automotriz. Permite visualizar métricas clave, reportes y estadísticas en tiempo real para la toma de decisiones.</p>
+                        <h3 data-translate="frontend-taller">Frontend del Sistema de Taller Automotriz</h3>
+                        <p data-translate="frontend-taller-desc">Interfaz de usuario moderna y responsiva que incluye dashboards y paneles gráficos interactivos para el análisis financiero y la gestión operativa del taller automotriz. Permite visualizar métricas clave, reportes y estadísticas en tiempo real para la toma de decisiones.</p>
                         <div class="project-tech">
                             <span class="tech-tag">Angular</span>
                             <span class="tech-tag">TypeScript</span>
@@ -451,8 +478,8 @@
                         <img src="tallerAutomotriz.jpg" alt="Backend Taller Automotriz">
                     </div>
                     <div class="project-content">
-                        <h3>Backend del Sistema de Taller Automotriz</h3>
-                        <p>API robusta y segura basada en arquitectura de microservicios, que gestiona la lógica de negocio, usuarios, inventario y servicios del taller. Implementa autenticación y autorización mediante JWT (JSON Web Tokens) para garantizar la seguridad y privacidad de los datos.</p>
+                        <h3 data-translate="backend-taller">Backend del Sistema de Taller Automotriz</h3>
+                        <p data-translate="backend-taller-desc">API robusta y segura basada en arquitectura de microservicios, que gestiona la lógica de negocio, usuarios, inventario y servicios del taller. Implementa autenticación y autorización mediante JWT (JSON Web Tokens) para garantizar la seguridad y privacidad de los datos.</p>
                         <div class="project-tech">
                             <span class="tech-tag">Spring Boot</span>
                             <span class="tech-tag">Java</span>
@@ -470,8 +497,8 @@
                         <img src="casa-inteligente.jpg" alt="Casa Inteligente IoT">
                     </div>
                     <div class="project-content">
-                        <h3>Casa Inteligente IoT</h3>
-                        <p>Proyecto de automatización de una casa inteligente utilizando IoT y microcontrolador ESP32. Incluye sistema de detección contra incendios, monitoreo de ambientes a distancia y almacenamiento de datos en tiempo real con Firebase.</p>
+                        <h3 data-translate="casa-inteligente">Casa Inteligente IoT</h3>
+                        <p data-translate="casa-inteligente-desc">Proyecto de automatización de una casa inteligente utilizando IoT y microcontrolador ESP32. Incluye sistema de detección contra incendios, monitoreo de ambientes a distancia y almacenamiento de datos en tiempo real con Firebase.</p>
                         <div class="project-tech">
                             <span class="tech-tag">ESP32</span>
                             <span class="tech-tag">IoT</span>
@@ -491,11 +518,11 @@
     <!-- Contacto -->
     <section id="contacto" class="contact">
         <div class="container">
-            <h2 class="section-title">Contacto</h2>
+            <h2 class="section-title" data-translate="contacto">Contacto</h2>
             <div class="contact-content">
                 <div class="contact-info">
-                    <h3>¡Trabajemos juntos!</h3>
-                    <p>Estoy interesado en oportunidades de prácticas profesionales donde pueda aplicar mis habilidades y seguir aprendiendo.</p>
+                    <h3 data-translate="trabajemos-juntos">¡Trabajemos juntos!</h3>
+                    <p data-translate="interesado-practicas">Estoy interesado en oportunidades de prácticas profesionales donde pueda aplicar mis habilidades y seguir aprendiendo.</p>
                     <div class="contact-details">
                         <div class="contact-item">
                             <i class="fas fa-envelope"></i>
@@ -519,18 +546,18 @@
                     <form name="contacto" method="POST" data-netlify="true" netlify>
                         <input type="hidden" name="form-name" value="contacto">
                         <div class="form-group">
-                            <input type="text" name="nombre" placeholder="Nombre" required>
+                            <input type="text" name="nombre" placeholder="Nombre" data-translate-placeholder="nombre-placeholder" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" placeholder="Email" required>
+                            <input type="email" name="email" placeholder="Email" data-translate-placeholder="email-placeholder" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="asunto" placeholder="Asunto" required>
+                            <input type="text" name="asunto" placeholder="Asunto" data-translate-placeholder="asunto-placeholder" required>
                         </div>
                         <div class="form-group">
-                            <textarea name="mensaje" placeholder="Mensaje" rows="5" required></textarea>
+                            <textarea name="mensaje" placeholder="Mensaje" data-translate-placeholder="mensaje-placeholder" rows="5" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                        <button type="submit" class="btn btn-primary" data-translate="enviar-mensaje">Enviar Mensaje</button>
                     </form>
                 </div>
                 <div id="form-success" style="display:none; color:var(--success-color); margin-top:1rem; font-weight:600;">¡Mensaje enviado correctamente! Pronto me pondré en contacto contigo.</div>
@@ -541,7 +568,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Richard Josué Pillaca Machaca. Todos los derechos reservados.</p>
+            <p>&copy; 2024 Richard Josué Pillaca Machaca. <span data-translate="derechos-reservados">Todos los derechos reservados.</span></p>
         </div>
     </footer>
 
