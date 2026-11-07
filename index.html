@@ -4,31 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Richard Pillaca | Arquitectura IPA en BBVA Perú</title>
-  <meta name="description" content="Portafolio de Richard Pillaca: Analista de Arquitectura en Intelligent Process Automation en BBVA Perú, ex Information Security. Automatización, IA generativa y desarrollo de software.">
-  <meta name="theme-color" content="#072146">
+  <meta name="description" content="Portafolio de Richard Pillaca: Analista de Arquitectura en Intelligent Process Automation en BBVA Perú. Automatización, IA generativa, ciberseguridad y desarrollo de software.">
+  <meta name="theme-color" content="#001391">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Richard Pillaca | Arquitectura IPA en BBVA Perú">
-  <meta property="og:description" content="Automatización, IA generativa, seguridad de la información y desarrollo de software.">
-  <meta property="og:image" content="assets/img/og-richard-pillaca.jpg">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23072146'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial,sans-serif' font-weight='700' font-size='28' fill='%235BBEFF'%3ERP%3C/text%3E%3C/svg%3E">
+  <meta property="og:description" content="Automatización, IA generativa, ciberseguridad y desarrollo de software.">
+  <meta property="og:image" content="https://portafoliorichardpillaca.netlify.app/assets/img/og-richard-pillaca.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23001391'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial,sans-serif' font-weight='700' font-size='28' fill='%2385C8FF'%3ERP%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
   <link rel="preload" as="image" href="assets/img/richard-pillaca.webp" type="image/webp">
   <link rel="stylesheet" href="styles.css">
   <script>
     (function () {
-      document.documentElement.classList.add('js');
-      try {
-        var t = localStorage.getItem('theme');
-        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
-      } catch (e) {}
+      var d = document.documentElement;
+      d.classList.add('js');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('reduced');
     })();
   </script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="skip">Saltar al contenido</a>
+
+  <div class="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <span class="loader-mark">RP</span>
+      <span class="loader-count"><span class="loader-num">0</span>%</span>
+    </div>
+    <div class="loader-bar"><span></span></div>
+  </div>
+
+  <div class="scroll-progress" aria-hidden="true"></div>
 
   <header class="site-header">
     <nav class="nav container" aria-label="Principal">
@@ -36,415 +45,512 @@
         <span class="brand-mark" aria-hidden="true">RP</span>
         <span class="brand-name">Richard Pillaca</span>
       </a>
-
-      <ul class="nav-links" id="nav-links">
+      <ul class="nav-links">
         <li><a href="#sobre-mi" data-i18n="nav.about">Sobre mí</a></li>
         <li><a href="#experiencia" data-i18n="nav.experience">Experiencia</a></li>
         <li><a href="#proyectos" data-i18n="nav.projects">Proyectos</a></li>
         <li><a href="#habilidades" data-i18n="nav.skills">Habilidades</a></li>
         <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
       </ul>
-
       <div class="nav-actions">
         <div class="lang-switch" role="group" aria-label="Idioma / Language">
           <button type="button" class="lang-btn" data-lang="es" aria-pressed="true">ES</button>
           <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
         </div>
-        <button type="button" class="icon-btn" id="theme-toggle" aria-label="Cambiar tema" data-i18n-aria="themeToggle">
-          <i class="ph ph-moon icon-moon" aria-hidden="true"></i>
-          <i class="ph ph-sun icon-sun" aria-hidden="true"></i>
-        </button>
-        <button type="button" class="icon-btn nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links" data-i18n-aria="menu">
-          <i class="ph ph-list" aria-hidden="true"></i>
+        <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu-overlay">
+          <span class="menu-btn-label" data-i18n="menu">Menú</span>
+          <span class="menu-btn-lines" aria-hidden="true"><span></span><span></span></span>
         </button>
       </div>
     </nav>
   </header>
 
+  <div class="menu-overlay" id="menu-overlay" hidden>
+    <nav class="container menu-inner" aria-label="Menú móvil">
+      <ul class="menu-links">
+        <li><a href="#sobre-mi" data-i18n="nav.about">Sobre mí</a></li>
+        <li><a href="#experiencia" data-i18n="nav.experience">Experiencia</a></li>
+        <li><a href="#proyectos" data-i18n="nav.projects">Proyectos</a></li>
+        <li><a href="#habilidades" data-i18n="nav.skills">Habilidades</a></li>
+        <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
+      </ul>
+      <div class="menu-foot">
+        <a href="mailto:richard232108@gmail.com">richard232108@gmail.com</a>
+        <a href="https://www.linkedin.com/in/richard-pillaca21" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/Lichal2108" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </nav>
+  </div>
+
   <main id="main">
-    <!-- Hero -->
+    <!-- ================= HERO ================= -->
     <section id="inicio" class="hero">
-      <div class="container">
-        <div class="hero-panel">
-          <div class="hero-copy">
-            <p class="eyebrow" data-i18n="hero.eyebrow">BBVA Perú · Arquitectura IPA</p>
-            <h1 class="hero-title">Richard Pillaca</h1>
-            <p class="hero-sub" data-i18n="hero.sub">Analista de Arquitectura en Intelligent Process Automation. Antes, 8 meses en Information Security. Automatizo procesos y construyo software con IA.</p>
-            <div class="hero-ctas">
-              <a href="#experiencia" class="btn btn-primary" data-i18n="hero.cta1">Ver experiencia</a>
-              <a href="#contacto" class="btn btn-ghost" data-i18n="hero.cta2">Contactar</a>
-            </div>
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-orb orb-a"></div>
+        <div class="hero-orb orb-b"></div>
+        <div class="hero-spot"></div>
+        <div class="hero-noise"></div>
+      </div>
+
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="status hero-in">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span data-i18n="hero.status">Hoy: Analista de Arquitectura IPA en BBVA Perú</span>
+          </p>
+
+          <h1 class="hero-name" aria-label="Richard Pillaca">
+            <span class="line" aria-hidden="true"><span class="chars">Richard</span></span>
+            <span class="line line-2" aria-hidden="true"><span class="chars">Pillaca</span></span>
+          </h1>
+
+          <p class="hero-lead hero-in">
+            <span data-i18n="hero.lead">Construyo</span>
+            <span class="rotator" aria-hidden="true"><span class="rotator-word">automatizaciones con IA</span></span>
+            <span class="sr-only" data-i18n="hero.leadSr">automatizaciones con IA, plataformas para la banca, agentes de WhatsApp y software a medida.</span>
+          </p>
+
+          <div class="hero-ctas hero-in">
+            <a href="#proyectos" class="btn btn-light magnetic"><span data-i18n="hero.cta1">Ver proyectos</span><i class="ph ph-arrow-down-right" aria-hidden="true"></i></a>
+            <a href="#contacto" class="btn btn-ghost magnetic"><span data-i18n="hero.cta2">Contactar</span></a>
           </div>
-          <figure class="hero-photo">
+        </div>
+
+        <div class="hero-visual">
+          <div class="photo-card" id="photo-card">
             <picture>
               <source srcset="assets/img/richard-pillaca.webp" type="image/webp">
               <img src="assets/img/richard-pillaca.jpg" width="881" height="1101" alt="Richard Pillaca sentado frente a un letrero azul con plantas detrás" data-i18n-alt="hero.photoAlt" fetchpriority="high">
             </picture>
-          </figure>
+            <span class="photo-shine" aria-hidden="true"></span>
+          </div>
+          <span class="float-tag tag-1" aria-hidden="true"><i class="ph ph-flow-arrow"></i><span data-i18n="tag.ipa">Arquitectura IPA</span></span>
+          <span class="float-tag tag-2" aria-hidden="true"><i class="ph ph-shield-check"></i><span data-i18n="tag.sec">Ciberseguridad</span></span>
+          <span class="float-tag tag-3" aria-hidden="true"><i class="ph ph-sparkle"></i><span data-i18n="tag.ai">IA generativa</span></span>
         </div>
       </div>
     </section>
 
-    <!-- Sobre mí -->
-    <section id="sobre-mi" class="section about">
-      <div class="container about-grid">
-        <div class="about-text reveal">
-          <h2 class="section-title" data-i18n="about.title">Sobre mí</h2>
-          <p data-i18n="about.p1">Estudio Ingeniería de Sistemas e Informática en la Universidad Nacional Mayor de San Marcos, en el quinto superior, y trabajo en BBVA Perú. Empecé en Ciberseguridad, donde integré el Comité de Excepciones de Seguridad, participé en la migración de DLP y en las iniciativas de ciberresiliencia.</p>
-          <p data-i18n="about.p2">Hoy soy Analista de Arquitectura en Intelligent Process Automation (IPA). Acompaño plataformas como DataX, Document Generator y Robotics, y llevo la IA generativa a tareas reales del día a día del área.</p>
-          <p data-i18n="about.p3">Antes trabajé en Softtek desarrollando sobre Guidewire y en Tekneka como analista de datos. Fuera del banco desarrollo software a medida: agentes de IA que atienden por WhatsApp, pipelines de contenido con IA y aplicaciones web con React, Next.js y Spring Boot.</p>
+    <!-- ================= MARQUEE ================= -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <span>DataX</span><i class="ph-fill ph-asterisk"></i>
+          <span>Document Generator</span><i class="ph-fill ph-asterisk"></i>
+          <span>Robotics</span><i class="ph-fill ph-asterisk"></i>
+          <span>Gemini Gems</span><i class="ph-fill ph-asterisk"></i>
+          <span>NotebookLM</span><i class="ph-fill ph-asterisk"></i>
+          <span>MCP</span><i class="ph-fill ph-asterisk"></i>
+          <span>DLP</span><i class="ph-fill ph-asterisk"></i>
+          <span>Spring Boot</span><i class="ph-fill ph-asterisk"></i>
+          <span>React</span><i class="ph-fill ph-asterisk"></i>
+          <span>Next.js</span><i class="ph-fill ph-asterisk"></i>
         </div>
-        <dl class="facts reveal">
-          <div class="fact">
-            <dt data-i18n="about.f1k">Hoy</dt>
-            <dd data-i18n="about.f1v">Analista de Arquitectura IPA, BBVA Perú</dd>
-          </div>
-          <div class="fact">
-            <dt data-i18n="about.f2k">Antes</dt>
-            <dd data-i18n="about.f2v">Practicante de Ciberseguridad, BBVA Perú</dd>
-          </div>
-          <div class="fact">
-            <dt data-i18n="about.f3k">Formación</dt>
-            <dd data-i18n="about.f3v">Ingeniería de Sistemas e Informática, UNMSM</dd>
-          </div>
-          <div class="fact">
-            <dt data-i18n="about.f4k">Idiomas</dt>
-            <dd data-i18n="about.f4v">Español nativo, inglés avanzado</dd>
-          </div>
-          <div class="fact">
-            <dt data-i18n="about.f5k">Ubicación</dt>
-            <dd>Lima, Perú</dd>
-          </div>
-        </dl>
-      </div>
-    </section>
-
-    <!-- Experiencia -->
-    <section id="experiencia" class="section experience">
-      <div class="container">
-        <h2 class="section-title reveal" data-i18n="exp.title">Experiencia</h2>
-
-        <ol class="timeline">
-          <li class="role reveal">
-            <div class="role-meta">
-              <span class="role-company">BBVA Perú</span>
-              <span class="role-dates" data-i18n="exp.r1.dates">Jul 2026 - actualidad</span>
-              <span class="role-badge" data-i18n="exp.current">Puesto actual</span>
-            </div>
-            <div class="role-body">
-              <h3 class="role-title" data-i18n="exp.r1.title">Analista de Arquitectura, Intelligent Process Automation (IPA)</h3>
-              <p class="role-area" data-i18n="exp.r1.area">Ingeniería · Arquitectura</p>
-              <ul class="role-points">
-                <li data-i18n="exp.r1.p1">Impulso y seguimiento de la estrategia 2027 para migrar la tecnología de transferencia de datos del banco que está en obsolescencia.</li>
-                <li data-i18n="exp.r1.p2">Recertificación y limpieza de componentes de transferencia: qué se archiva y qué se reconfigura (engine MX en lugar de PER).</li>
-                <li data-i18n="exp.r1.p3">Piloto de automatización para migrar de forma masiva plantillas de documentos desde legacy hacia Document Generator, más su gobierno y soporte.</li>
-                <li data-i18n="exp.r1.p4">Automatizaciones con IA generativa (Gemas, NotebookLM, MCP) para el área y otras disciplinas.</li>
-                <li data-i18n="exp.r1.p5">Rotación de guardias para incidencias productivas y reporte de avances en sincros, comité de líderes y gerencia.</li>
-              </ul>
-              <ul class="chips" aria-label="Plataformas">
-                <li>DataX</li>
-                <li>Document Generator</li>
-                <li>Robotics</li>
-                <li data-i18n="exp.r1.c4">IA generativa</li>
-                <li data-i18n="exp.r1.c5">Evento BEA Upsilon Psi</li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="role reveal">
-            <div class="role-meta">
-              <span class="role-company">BBVA Perú</span>
-              <span class="role-dates" data-i18n="exp.r2.dates">Nov 2025 - Jun 2026</span>
-            </div>
-            <div class="role-body">
-              <h3 class="role-title" data-i18n="exp.r2.title">Practicante de Ciberseguridad (Information Security)</h3>
-              <p class="role-area" data-i18n="exp.r2.area">Seguridad Corporativa</p>
-              <ul class="role-points">
-                <li data-i18n="exp.r2.p1">Desarrollé una plataforma de gobierno que centraliza la información de Seguridad Corporativa y automatiza el seguimiento normativo, las alertas y el envío de correos con Google Apps Script.</li>
-                <li data-i18n="exp.r2.p2">Participé en la migración de la herramienta DLP (Data Loss Prevention): pruebas de efectividad y documentación de uso. Integré el Comité de Excepciones de Seguridad.</li>
-                <li data-i18n="exp.r2.p3">Estructuré los datos del área y automaticé procesos recurrentes, dejando la base para usar IA generativa.</li>
-                <li data-i18n="exp.r2.p4">Lideré charlas de onboarding y capacitaciones sobre phishing, taxonomía de la información y reporte de incidentes.</li>
-                <li data-i18n="exp.r2.p5">Ejecuté pruebas de estrés y simulacros de ingeniería social como parte de las iniciativas de ciberresiliencia.</li>
-              </ul>
-              <ul class="chips" aria-label="Temas">
-                <li data-i18n="exp.r2.c1">Comité de Excepciones</li>
-                <li>DLP</li>
-                <li data-i18n="exp.r2.c3">Ciberresiliencia</li>
-                <li>Google Apps Script</li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="role reveal">
-            <div class="role-meta">
-              <span class="role-company">Softtek</span>
-              <span class="role-dates" data-i18n="exp.r3.dates">Set 2025 - Nov 2025</span>
-            </div>
-            <div class="role-body">
-              <h3 class="role-title">App Dev - Application</h3>
-              <ul class="role-points">
-                <li data-i18n="exp.r3.p1">Desarrollo y mantenimiento de aplicaciones en Guidewire Studio, con foco en automatizar procesos internos y mejorar la experiencia de usuario.</li>
-                <li data-i18n="exp.r3.p2">Personalización de BillingCenter, ClaimCenter y PolicyCenter, e integración con sistemas externos.</li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="role reveal">
-            <div class="role-meta">
-              <span class="role-company">Tekneka</span>
-              <span class="role-dates" data-i18n="exp.r4.dates">Nov 2024 - Ago 2025</span>
-            </div>
-            <div class="role-body">
-              <h3 class="role-title" data-i18n="exp.r4.title">Analista de Datos</h3>
-              <ul class="role-points">
-                <li data-i18n="exp.r4.p1">Análisis de datos históricos con SQL y Python para encontrar patrones en compras y ventas.</li>
-                <li data-i18n="exp.r4.p2">Dashboards en Power BI para monitorear KPIs estratégicos y proyecciones comerciales.</li>
-              </ul>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- Proyectos -->
-    <section id="proyectos" class="section projects">
-      <div class="container">
-        <h2 class="section-title reveal" data-i18n="proj.title">Proyectos</h2>
-        <p class="section-lead reveal" data-i18n="proj.lead">Trabajo para clientes reales y proyectos personales. Los repositorios privados se muestran sin enlace al código.</p>
-
-        <div class="bento">
-          <article class="card card-feature reveal">
-            <div class="card-media">
-              <img src="assets/img/proyecto-tekneka.webp" width="1200" height="691" loading="lazy" alt="Página de inicio del sitio de Tekneka con sus depósitos punzocortantes rojos" data-i18n-alt="proj.p1.alt">
-            </div>
-            <div class="card-body">
-              <p class="card-kicker" data-i18n="proj.p1.kicker">Cliente: Tekneka</p>
-              <h3 data-i18n="proj.p1.title">Agente comercial por WhatsApp y sitio web</h3>
-              <p data-i18n="proj.p1.desc">Agente de IA que atiende a los clientes por WhatsApp usando solo la documentación de la empresa: cita sus fuentes, escala al dueño lo que no sabe y registra a cada cliente por producto. Incluye el nuevo sitio público conectado a WooCommerce.</p>
-              <ul class="tags"><li>TypeScript</li><li>WhatsApp Cloud API</li><li>RAG</li><li>React 19</li><li>Tailwind 4</li><li>Docker</li></ul>
-              <div class="card-links">
-                <a href="https://teknekaperu.com" target="_blank" rel="noopener" class="link-arrow"><i class="ph ph-arrow-square-out" aria-hidden="true"></i><span data-i18n="proj.site">Ver sitio</span></a>
-                <span class="private"><i class="ph ph-lock-simple" aria-hidden="true"></i><span data-i18n="proj.private">Repositorio privado</span></span>
-              </div>
-            </div>
-          </article>
-
-          <article class="card card-ink reveal">
-            <div class="card-icon" aria-hidden="true"><i class="ph ph-film-strip"></i></div>
-            <div class="card-body">
-              <h3>TeknekIA</h3>
-              <p data-i18n="proj.p2.desc">Pipeline que convierte una idea en un video de historia animada para YouTube: guion con Claude, personajes consistentes, imágenes por escena, narración, subtítulos y render vertical u horizontal.</p>
-              <ul class="tags"><li>TypeScript</li><li>Claude</li><li>FLUX.2</li><li>Gemini TTS</li><li>Remotion</li></ul>
-              <div class="card-links">
-                <span class="private"><i class="ph ph-lock-simple" aria-hidden="true"></i><span data-i18n="proj.private">Repositorio privado</span></span>
-              </div>
-            </div>
-          </article>
-
-          <article class="card card-tint reveal">
-            <div class="card-icon" aria-hidden="true"><i class="ph ph-warehouse"></i></div>
-            <div class="card-body">
-              <h3>eSUM</h3>
-              <p data-i18n="proj.p3.desc">Plataforma de gestión operativa: inventario con mapa, almacén, repuestos, equipamiento, colaboradores, flujos tipo kanban y reportes fotográficos.</p>
-              <ul class="tags"><li>Next.js 16</li><li>NestJS</li><li>TanStack Query</li><li>Recharts</li></ul>
-              <div class="card-links">
-                <span class="private"><i class="ph ph-lock-simple" aria-hidden="true"></i><span data-i18n="proj.private">Repositorio privado</span></span>
-              </div>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="card-icon" aria-hidden="true"><i class="ph ph-traffic-signal"></i></div>
-            <div class="card-body">
-              <h3>Vigía Vial AI</h3>
-              <p data-i18n="proj.p4.desc">Monitoreo de tránsito en la Vía Expresa: detecta vehículos y placas con YOLOv8 y PaddleOCR, redacta reportes de infracciones con Gemini y predice la severidad de accidentes.</p>
-              <ul class="tags"><li>Python</li><li>YOLOv8</li><li>PaddleOCR</li><li>Gemini</li><li>Streamlit</li></ul>
-              <div class="card-links">
-                <a href="https://github.com/Lichal2108/Vig-a-Vial-AI---Sistema-de-Monitoreo-Vehicular-Inteligente" target="_blank" rel="noopener" class="link-arrow"><i class="ph ph-github-logo" aria-hidden="true"></i>GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card reveal">
-            <div class="card-icon" aria-hidden="true"><i class="ph ph-chart-scatter"></i></div>
-            <div class="card-body">
-              <h3 data-i18n="proj.p5.title">Machine Learning aplicado</h3>
-              <p data-i18n="proj.p5.desc">Modelos de regresión y clasificación con interfaz gráfica y comparación de métricas: contaminación atmosférica, incendios forestales con 118 mil registros y diagnóstico de cáncer de mama.</p>
-              <ul class="tags"><li>scikit-learn</li><li>pandas</li><li>Flask</li><li>Tkinter</li></ul>
-              <div class="card-links">
-                <a href="https://github.com/Lichal2108/Predicci-n-de-Contaminaci-n" target="_blank" rel="noopener" class="link-arrow"><i class="ph ph-github-logo" aria-hidden="true"></i><span data-i18n="proj.p5.l1">Contaminación</span></a>
-                <a href="https://github.com/Lichal2108/forestfires_ml_app" target="_blank" rel="noopener" class="link-arrow"><i class="ph ph-github-logo" aria-hidden="true"></i><span data-i18n="proj.p5.l2">Incendios</span></a>
-                <a href="https://github.com/Lichal2108/Predicci-n-de-diagnostico-de-cancer-de-mama" target="_blank" rel="noopener" class="link-arrow"><i class="ph ph-github-logo" aria-hidden="true"></i><span data-i18n="proj.p5.l3">Cáncer de mama</span></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card card-half reveal">
-            <div class="card-media card-media-short">
-              <img src="assets/img/proyecto-taller-front.webp" width="1600" height="1600" loading="lazy" alt="Ilustración de un taller automotriz" data-i18n-alt="proj.p6.alt">
-            </div>
-            <div class="card-body">
-              <h3 data-i18n="proj.p6.title">Sistema de taller automotriz</h3>
-              <p data-i18n="proj.p6.desc">Frontend en Angular con dashboards financieros y operativos, y backend en microservicios Spring Boot con autenticación JWT.</p>
-              <ul class="tags"><li>Angular</li><li>Spring Boot</li><li>PostgreSQL</li><li>JWT</li></ul>
-              <div class="card-links">
-                <a href="https://github.com/Lichal2108/FrontEnd-Taller" target="_blank" rel="noopener" class="link-arrow"><i class="ph ph-github-logo" aria-hidden="true"></i>Frontend</a>
-                <a href="https://github.com/Lichal2108/Backend-Taller" target="_blank" rel="noopener" class="link-arrow"><i class="ph ph-github-logo" aria-hidden="true"></i>Backend</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card card-half reveal">
-            <div class="card-media card-media-short">
-              <img src="assets/img/proyecto-casa-iot.webp" width="970" height="546" loading="lazy" alt="Esquema de una casa inteligente con sensores conectados" data-i18n-alt="proj.p7.alt">
-            </div>
-            <div class="card-body">
-              <h3 data-i18n="proj.p7.title">Casa inteligente IoT</h3>
-              <p data-i18n="proj.p7.desc">Automatización con ESP32: detección de incendios, monitoreo remoto de ambientes y datos en tiempo real con Firebase.</p>
-              <ul class="tags"><li>ESP32</li><li>C++</li><li>Firebase</li><li>IoT</li></ul>
-              <div class="card-links">
-                <a href="https://github.com/Lichal2108/Casa-Inteligente-ESP32-IOT" target="_blank" rel="noopener" class="link-arrow"><i class="ph ph-github-logo" aria-hidden="true"></i>GitHub</a>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <a class="more-link reveal" href="https://github.com/Lichal2108" target="_blank" rel="noopener"><i class="ph ph-github-logo" aria-hidden="true"></i><span data-i18n="proj.more">Más repositorios en GitHub</span><i class="ph ph-arrow-right" aria-hidden="true"></i></a>
-      </div>
-    </section>
-
-    <!-- Habilidades -->
-    <section id="habilidades" class="section skills">
-      <div class="container">
-        <h2 class="section-title reveal" data-i18n="skills.title">Habilidades</h2>
-        <div class="skill-groups">
-          <div class="skill-group reveal">
-            <h3><i class="ph ph-flow-arrow" aria-hidden="true"></i><span data-i18n="skills.g1">Arquitectura y automatización</span></h3>
-            <ul class="chips">
-              <li>Intelligent Process Automation</li><li>Robotics (RPA)</li><li>Document Generator</li><li>DataX</li><li data-i18n="skills.g1.c5">Gobierno de plataformas</li><li data-i18n="skills.g1.c6">Gestión de incidencias</li><li>Google Apps Script</li>
-            </ul>
-          </div>
-          <div class="skill-group reveal">
-            <h3><i class="ph ph-sparkle" aria-hidden="true"></i><span data-i18n="skills.g2">IA generativa</span></h3>
-            <ul class="chips">
-              <li>Gemini Gems</li><li>NotebookLM</li><li>MCP</li><li>Claude</li><li data-i18n="skills.g2.c5">Agentes con RAG</li><li>Prompt engineering</li>
-            </ul>
-          </div>
-          <div class="skill-group reveal">
-            <h3><i class="ph ph-shield-check" aria-hidden="true"></i><span data-i18n="skills.g3">Seguridad de la información</span></h3>
-            <ul class="chips">
-              <li>DLP</li><li data-i18n="skills.g3.c2">Gestión de excepciones</li><li data-i18n="skills.g3.c3">Ciberresiliencia</li><li data-i18n="skills.g3.c4">Gestión de riesgos</li>
-            </ul>
-          </div>
-          <div class="skill-group reveal">
-            <h3><i class="ph ph-code" aria-hidden="true"></i><span data-i18n="skills.g4">Desarrollo</span></h3>
-            <ul class="chips">
-              <li>Java</li><li>Spring Boot</li><li>TypeScript</li><li>React</li><li>Next.js</li><li>Angular</li><li>NestJS</li><li>Python</li><li>Kotlin</li><li>Guidewire</li>
-            </ul>
-          </div>
-          <div class="skill-group reveal">
-            <h3><i class="ph ph-database" aria-hidden="true"></i><span data-i18n="skills.g5">Datos y machine learning</span></h3>
-            <ul class="chips">
-              <li>PostgreSQL</li><li>MySQL</li><li>MongoDB</li><li>scikit-learn</li><li>YOLOv8</li><li>Power BI</li><li>Tableau</li>
-            </ul>
-          </div>
-          <div class="skill-group reveal">
-            <h3><i class="ph ph-toolbox" aria-hidden="true"></i><span data-i18n="skills.g6">Herramientas y forma de trabajo</span></h3>
-            <ul class="chips">
-              <li>Git</li><li>Docker</li><li>Linux</li><li>Scrum</li><li data-i18n="skills.g6.c5">Mentoría técnica</li><li data-i18n="skills.g6.c6">Atención a clientes internos</li>
-            </ul>
-          </div>
+        <div class="marquee-group">
+          <span>DataX</span><i class="ph-fill ph-asterisk"></i>
+          <span>Document Generator</span><i class="ph-fill ph-asterisk"></i>
+          <span>Robotics</span><i class="ph-fill ph-asterisk"></i>
+          <span>Gemini Gems</span><i class="ph-fill ph-asterisk"></i>
+          <span>NotebookLM</span><i class="ph-fill ph-asterisk"></i>
+          <span>MCP</span><i class="ph-fill ph-asterisk"></i>
+          <span>DLP</span><i class="ph-fill ph-asterisk"></i>
+          <span>Spring Boot</span><i class="ph-fill ph-asterisk"></i>
+          <span>React</span><i class="ph-fill ph-asterisk"></i>
+          <span>Next.js</span><i class="ph-fill ph-asterisk"></i>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Formación -->
-    <section id="educacion" class="section education">
+    <!-- ================= SOBRE MÍ ================= -->
+    <section id="sobre-mi" class="about section">
       <div class="container">
-        <h2 class="section-title reveal" data-i18n="edu.title">Formación</h2>
-        <ul class="edu-list">
-          <li class="edu reveal">
-            <img src="assets/img/logo-unmsm.webp" alt="Escudo de la UNMSM" width="160" height="160" loading="lazy">
-            <div>
-              <h3 data-i18n="edu.e1.t">Ingeniería de Sistemas e Informática</h3>
-              <p data-i18n="edu.e1.s">Universidad Nacional Mayor de San Marcos, quinto superior</p>
-            </div>
+        <div class="about-grid">
+          <h2 class="about-label split-words" data-i18n="about.title">Sobre mí</h2>
+          <div class="about-main">
+            <p class="statement" data-i18n="about.statement">Trabajo en la arquitectura de BBVA Perú, automatizando procesos con Robotics, Document Generator e IA generativa. Antes cuidé la información del banco desde Ciberseguridad. Fuera del banco construyo software que la gente usa de verdad.</p>
+            <p class="about-sub reveal" data-i18n="about.sub">Estudio Ingeniería de Sistemas e Informática en la UNMSM, en el quinto superior. Pasé por Tekneka como analista de datos y por Softtek desarrollando sobre Guidewire.</p>
+          </div>
+        </div>
+
+        <ul class="stats">
+          <li class="stat reveal">
+            <span class="stat-num"><span class="count" data-to="2">0</span></span>
+            <span class="stat-label" data-i18n="stats.s1">Años de experiencia</span>
           </li>
-          <li class="edu reveal">
-            <img src="assets/img/logo-britanico.webp" alt="Logo del Británico" width="160" height="160" loading="lazy">
-            <div>
-              <h3 data-i18n="edu.e2.t">Inglés avanzado</h3>
-              <p>Británico</p>
-            </div>
+          <li class="stat reveal">
+            <span class="stat-num"><span class="count" data-to="3">0</span></span>
+            <span class="stat-label" data-i18n="stats.s2">Empresas: BBVA, Softtek y Tekneka</span>
           </li>
-          <li class="edu reveal">
-            <img src="assets/img/logo-ccex.webp" alt="Logo de la Cámara de Comercio Exterior" width="160" height="160" loading="lazy">
-            <div>
-              <h3 data-i18n="edu.e3.t">Python y Power BI</h3>
-              <p data-i18n="edu.e3.s">Cámara de Comercio Exterior</p>
-            </div>
+          <li class="stat reveal">
+            <span class="stat-num"><span class="count" data-to="7">0</span></span>
+            <span class="stat-label" data-i18n="stats.s3">Proyectos destacados</span>
+          </li>
+          <li class="stat reveal">
+            <span class="stat-num"><span class="stat-pre" data-i18n="stats.top">Top</span><span class="count" data-to="20">0</span><span class="stat-unit">%</span></span>
+            <span class="stat-label" data-i18n="stats.s4">Quinto superior en la UNMSM</span>
           </li>
         </ul>
       </div>
     </section>
 
-    <!-- Contacto -->
-    <section id="contacto" class="section contact">
-      <div class="container contact-grid">
-        <div class="contact-info reveal">
-          <h2 class="section-title" data-i18n="contact.title">Hablemos</h2>
-          <p data-i18n="contact.lead">Abierto a conversar sobre automatización, arquitectura, seguridad y proyectos de software.</p>
-          <ul class="contact-list">
-            <li><a href="mailto:richard232108@gmail.com"><i class="ph ph-envelope-simple" aria-hidden="true"></i>richard232108@gmail.com</a></li>
-            <li><a href="https://www.linkedin.com/in/richard-pillaca21" target="_blank" rel="noopener"><i class="ph ph-linkedin-logo" aria-hidden="true"></i>LinkedIn</a></li>
-            <li><a href="https://github.com/Lichal2108" target="_blank" rel="noopener"><i class="ph ph-github-logo" aria-hidden="true"></i>github.com/Lichal2108</a></li>
-            <li><span><i class="ph ph-map-pin" aria-hidden="true"></i>Lima, Perú</span></li>
-          </ul>
-          <a class="btn btn-outline" id="cv-link" href="assets/Richard-Pillaca-CV.pdf" download><i class="ph ph-download-simple" aria-hidden="true"></i><span data-i18n="contact.cv">Descargar CV</span></a>
+    <!-- ================= EXPERIENCIA ================= -->
+    <section id="experiencia" class="xp section">
+      <div class="container">
+        <h2 class="section-title split-words" data-i18n="exp.title">Experiencia</h2>
+
+        <div class="xp-layout">
+          <aside class="xp-aside" aria-hidden="true">
+            <div class="xp-now">
+              <span class="xp-year" id="xp-year">2026</span>
+              <span class="xp-co" id="xp-co">BBVA Perú</span>
+            </div>
+            <div class="xp-rail"><span class="xp-rail-fill"></span></div>
+          </aside>
+
+          <ol class="xp-list">
+            <li class="xp-card is-current" data-year="2026" data-co="BBVA Perú">
+              <div class="xp-head">
+                <span class="xp-company">BBVA Perú</span>
+                <span class="xp-dates" data-i18n="exp.r1.dates">Jul 2026 - actualidad</span>
+                <span class="xp-badge"><span class="live-dot" aria-hidden="true"></span><span data-i18n="exp.current">Puesto actual</span></span>
+              </div>
+              <h3 class="xp-title" data-i18n="exp.r1.title">Analista de Arquitectura, Intelligent Process Automation (IPA)</h3>
+              <ul class="xp-points">
+                <li data-i18n="exp.r1.p1">Impulso la estrategia 2027 para migrar la tecnología de transferencia de datos del banco que está en obsolescencia.</li>
+                <li data-i18n="exp.r1.p2">Recertifico y limpio componentes de transferencia: qué se archiva y qué se reconfigura (engine MX en lugar de PER).</li>
+                <li data-i18n="exp.r1.p3">Llevo el piloto que migra de forma masiva plantillas de documentos desde legacy hacia Document Generator, con su gobierno y soporte.</li>
+                <li data-i18n="exp.r1.p4">Construyo automatizaciones con Robotics e IA generativa (Gemini Gems, NotebookLM, MCP) para el área y otras disciplinas.</li>
+                <li data-i18n="exp.r1.p5">Gestiono la rotación de guardias para incidencias productivas y presento avances a líderes y gerencia.</li>
+              </ul>
+              <ul class="chips">
+                <li>DataX</li><li>Document Generator</li><li>Robotics</li><li data-i18n="exp.r1.c4">IA generativa</li><li data-i18n="exp.r1.c5">Evento BEA Upsilon Psi</li>
+              </ul>
+            </li>
+
+            <li class="xp-card" data-year="2025" data-co="BBVA Perú">
+              <div class="xp-head">
+                <span class="xp-company">BBVA Perú</span>
+                <span class="xp-dates" data-i18n="exp.r2.dates">Nov 2025 - Jun 2026</span>
+              </div>
+              <h3 class="xp-title" data-i18n="exp.r2.title">Practicante de Ciberseguridad (Information Security)</h3>
+              <ul class="xp-points">
+                <li data-i18n="exp.r2.p1">Desarrollé una plataforma de gobierno que centraliza la información de Seguridad Corporativa y automatiza el seguimiento normativo, las alertas y los correos con Google Apps Script.</li>
+                <li data-i18n="exp.r2.p2">Participé en la migración de la herramienta DLP con pruebas de efectividad y documentación. Integré el Comité de Excepciones de Seguridad.</li>
+                <li data-i18n="exp.r2.p3">Estructuré los datos del área y automaticé procesos recurrentes, dejando la base para usar IA generativa.</li>
+                <li data-i18n="exp.r2.p4">Lideré charlas de onboarding y capacitaciones sobre phishing, taxonomía de la información y reporte de incidentes.</li>
+                <li data-i18n="exp.r2.p5">Ejecuté pruebas de estrés y simulacros de ingeniería social como parte de las iniciativas de ciberresiliencia.</li>
+              </ul>
+              <ul class="chips">
+                <li data-i18n="exp.r2.c1">Comité de Excepciones</li><li>DLP</li><li data-i18n="exp.r2.c3">Ciberresiliencia</li><li>Google Apps Script</li>
+              </ul>
+            </li>
+
+            <li class="xp-card" data-year="2025" data-co="Softtek">
+              <div class="xp-head">
+                <span class="xp-company">Softtek</span>
+                <span class="xp-dates" data-i18n="exp.r3.dates">Set 2025 - Nov 2025</span>
+              </div>
+              <h3 class="xp-title">App Dev - Application</h3>
+              <ul class="xp-points">
+                <li data-i18n="exp.r3.p1">Desarrollo y mantenimiento de aplicaciones en Guidewire Studio, con foco en automatizar procesos internos y mejorar la experiencia de usuario.</li>
+                <li data-i18n="exp.r3.p2">Personalización de BillingCenter, ClaimCenter y PolicyCenter, e integración con sistemas externos.</li>
+              </ul>
+              <ul class="chips"><li>Guidewire Studio</li><li>BillingCenter</li><li>ClaimCenter</li><li>PolicyCenter</li></ul>
+            </li>
+
+            <li class="xp-card" data-year="2024" data-co="Tekneka">
+              <div class="xp-head">
+                <span class="xp-company">Tekneka</span>
+                <span class="xp-dates" data-i18n="exp.r4.dates">Nov 2024 - Ago 2025</span>
+              </div>
+              <h3 class="xp-title" data-i18n="exp.r4.title">Analista de Datos</h3>
+              <ul class="xp-points">
+                <li data-i18n="exp.r4.p1">Análisis de datos históricos con SQL y Python para encontrar patrones en compras y ventas.</li>
+                <li data-i18n="exp.r4.p2">Dashboards en Power BI para monitorear KPIs estratégicos y proyecciones comerciales.</li>
+              </ul>
+              <ul class="chips"><li>SQL</li><li>Python</li><li>Power BI</li></ul>
+            </li>
+          </ol>
         </div>
+      </div>
+    </section>
 
-        <form class="contact-form reveal" name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
-          <input type="hidden" name="form-name" value="contacto">
-          <p class="hp"><label>No llenar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <!-- ================= PROYECTOS (scroll horizontal) ================= -->
+    <section id="proyectos" class="projects">
+      <div class="projects-pin">
+        <div class="projects-track">
+          <div class="projects-intro">
+            <h2 class="section-title split-words" data-i18n="proj.title">Proyectos</h2>
+            <p class="projects-lead" data-i18n="proj.lead">Clientes reales y proyectos propios. Automatización, IA aplicada y producto web de punta a punta.</p>
+            <a class="link-line" href="https://github.com/Lichal2108" target="_blank" rel="noopener"><i class="ph ph-github-logo" aria-hidden="true"></i><span data-i18n="proj.more">Todo mi GitHub</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+          </div>
 
-          <div class="field">
-            <label for="f-nombre" data-i18n="form.name">Nombre</label>
-            <input id="f-nombre" type="text" name="nombre" autocomplete="name" required aria-describedby="e-nombre">
-            <p class="field-error" id="e-nombre" data-i18n="form.errName">Escribe tu nombre.</p>
+          <article class="pcard pcard-wide">
+            <div class="pcard-media">
+              <img src="assets/img/proyecto-tekneka.webp" width="1200" height="691" alt="Página de inicio del sitio de Tekneka con sus depósitos punzocortantes rojos" data-i18n-alt="proj.p1.alt">
+            </div>
+            <div class="pcard-body">
+              <p class="pcard-kicker" data-i18n="proj.p1.kicker">Cliente real · Tekneka</p>
+              <h3 data-i18n="proj.p1.title">Agente comercial por WhatsApp y sitio web</h3>
+              <p data-i18n="proj.p1.desc">Agente de IA que atiende por WhatsApp usando solo la documentación de la empresa: cita sus fuentes, escala al dueño lo que no sabe y registra a cada cliente por producto. Más el nuevo sitio conectado a WooCommerce.</p>
+              <ul class="tags"><li>TypeScript</li><li>WhatsApp API</li><li>RAG</li><li>React 19</li><li>Docker</li></ul>
+              <div class="pcard-links">
+                <a href="https://teknekaperu.com" target="_blank" rel="noopener" class="link-line"><span data-i18n="proj.site">Ver sitio</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+                <span class="private"><i class="ph ph-lock-simple" aria-hidden="true"></i><span data-i18n="proj.private">Código privado</span></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="pcard">
+            <div class="pcard-media pvisual pv-film" aria-hidden="true">
+              <span class="pv-ring"></span><span class="pv-ring r2"></span>
+              <i class="ph ph-film-strip"></i>
+            </div>
+            <div class="pcard-body">
+              <p class="pcard-kicker" data-i18n="proj.p2.kicker">IA generativa</p>
+              <h3>TeknekIA</h3>
+              <p data-i18n="proj.p2.desc">Convierte una idea en un video de historia animada para YouTube: guion con Claude, personajes consistentes, imágenes por escena, narración, subtítulos y render.</p>
+              <ul class="tags"><li>Claude</li><li>FLUX.2</li><li>Gemini TTS</li><li>Remotion</li></ul>
+              <div class="pcard-links"><span class="private"><i class="ph ph-lock-simple" aria-hidden="true"></i><span data-i18n="proj.private">Código privado</span></span></div>
+            </div>
+          </article>
+
+          <article class="pcard">
+            <div class="pcard-media pvisual pv-ware" aria-hidden="true">
+              <span class="pv-grid"></span>
+              <i class="ph ph-warehouse"></i>
+            </div>
+            <div class="pcard-body">
+              <p class="pcard-kicker" data-i18n="proj.p3.kicker">Producto web</p>
+              <h3>eSUM</h3>
+              <p data-i18n="proj.p3.desc">Plataforma de gestión operativa: inventario con mapa, almacén, repuestos, equipamiento, flujos tipo kanban y reportes fotográficos.</p>
+              <ul class="tags"><li>Next.js 16</li><li>NestJS</li><li>TanStack Query</li></ul>
+              <div class="pcard-links"><span class="private"><i class="ph ph-lock-simple" aria-hidden="true"></i><span data-i18n="proj.private">Código privado</span></span></div>
+            </div>
+          </article>
+
+          <article class="pcard">
+            <div class="pcard-media pvisual pv-road" aria-hidden="true">
+              <span class="pv-scan"></span>
+              <i class="ph ph-car-profile"></i>
+            </div>
+            <div class="pcard-body">
+              <p class="pcard-kicker" data-i18n="proj.p4.kicker">Visión por computadora</p>
+              <h3>Vigía Vial AI</h3>
+              <p data-i18n="proj.p4.desc">Detecta vehículos y placas en la Vía Expresa con YOLOv8 y PaddleOCR, redacta reportes de infracciones con Gemini y predice la severidad de accidentes.</p>
+              <ul class="tags"><li>YOLOv8</li><li>PaddleOCR</li><li>Gemini</li><li>Streamlit</li></ul>
+              <div class="pcard-links"><a href="https://github.com/Lichal2108/Vig-a-Vial-AI---Sistema-de-Monitoreo-Vehicular-Inteligente" target="_blank" rel="noopener" class="link-line">GitHub<i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></div>
+            </div>
+          </article>
+
+          <article class="pcard">
+            <div class="pcard-media">
+              <img src="assets/img/proyecto-taller-front.webp" width="1600" height="1600" alt="Ilustración de un taller automotriz" data-i18n-alt="proj.p6.alt">
+            </div>
+            <div class="pcard-body">
+              <p class="pcard-kicker" data-i18n="proj.p6.kicker">Full stack</p>
+              <h3 data-i18n="proj.p6.title">Sistema de taller automotriz</h3>
+              <p data-i18n="proj.p6.desc">Angular con dashboards financieros y operativos, y backend en microservicios Spring Boot con autenticación JWT.</p>
+              <ul class="tags"><li>Angular</li><li>Spring Boot</li><li>PostgreSQL</li><li>JWT</li></ul>
+              <div class="pcard-links">
+                <a href="https://github.com/Lichal2108/FrontEnd-Taller" target="_blank" rel="noopener" class="link-line">Frontend<i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+                <a href="https://github.com/Lichal2108/Backend-Taller" target="_blank" rel="noopener" class="link-line">Backend<i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="pcard">
+            <div class="pcard-media pvisual pv-ml" aria-hidden="true">
+              <span class="pv-dots"></span>
+              <i class="ph ph-chart-scatter"></i>
+            </div>
+            <div class="pcard-body">
+              <p class="pcard-kicker">Machine learning</p>
+              <h3 data-i18n="proj.p5.title">Modelos predictivos</h3>
+              <p data-i18n="proj.p5.desc">Regresión y clasificación con interfaz gráfica y comparación de métricas: contaminación del aire, incendios forestales con 118 mil registros y diagnóstico de cáncer de mama.</p>
+              <ul class="tags"><li>scikit-learn</li><li>pandas</li><li>Flask</li></ul>
+              <div class="pcard-links">
+                <a href="https://github.com/Lichal2108/Predicci-n-de-Contaminaci-n" target="_blank" rel="noopener" class="link-line"><span data-i18n="proj.p5.l1">Aire</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+                <a href="https://github.com/Lichal2108/forestfires_ml_app" target="_blank" rel="noopener" class="link-line"><span data-i18n="proj.p5.l2">Incendios</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+                <a href="https://github.com/Lichal2108/Predicci-n-de-diagnostico-de-cancer-de-mama" target="_blank" rel="noopener" class="link-line"><span data-i18n="proj.p5.l3">Cáncer</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="pcard">
+            <div class="pcard-media">
+              <img src="assets/img/proyecto-casa-iot.webp" width="970" height="546" alt="Esquema de una casa inteligente con sensores conectados" data-i18n-alt="proj.p7.alt">
+            </div>
+            <div class="pcard-body">
+              <p class="pcard-kicker">IoT</p>
+              <h3 data-i18n="proj.p7.title">Casa inteligente</h3>
+              <p data-i18n="proj.p7.desc">ESP32 con detección de incendios, monitoreo remoto de ambientes y datos en tiempo real con Firebase.</p>
+              <ul class="tags"><li>ESP32</li><li>C++</li><li>Firebase</li></ul>
+              <div class="pcard-links"><a href="https://github.com/Lichal2108/Casa-Inteligente-ESP32-IOT" target="_blank" rel="noopener" class="link-line">GitHub<i class="ph ph-arrow-up-right" aria-hidden="true"></i></a></div>
+            </div>
+          </article>
+        </div>
+        <div class="projects-progress" aria-hidden="true"><span></span></div>
+      </div>
+    </section>
+
+    <!-- ================= HABILIDADES (bento) ================= -->
+    <section id="habilidades" class="skills section">
+      <div class="container">
+        <h2 class="section-title split-words" data-i18n="skills.title">Con qué trabajo</h2>
+        <div class="bento">
+          <article class="tile tile-auto spot reveal">
+            <div class="tile-head"><i class="ph ph-flow-arrow" aria-hidden="true"></i><h3 data-i18n="skills.g1">Arquitectura y automatización</h3></div>
+            <p data-i18n="skills.g1.d">Plataformas que el banco usa a diario para mover datos, generar documentos y automatizar tareas.</p>
+            <ul class="chips"><li>Intelligent Process Automation</li><li>Robotics (RPA)</li><li>Document Generator</li><li>DataX</li><li>Google Apps Script</li><li data-i18n="skills.g1.c6">Gestión de incidencias</li></ul>
+          </article>
+
+          <article class="tile tile-ai spot reveal">
+            <i class="ph ph-sparkle tile-ai-big" aria-hidden="true"></i>
+            <div class="tile-head"><i class="ph ph-sparkle" aria-hidden="true"></i><h3 data-i18n="skills.g2">IA generativa</h3></div>
+            <p data-i18n="skills.g2.d">De asistentes internos a agentes que responden a clientes con fuentes verificables.</p>
+            <ul class="chips"><li>Gemini Gems</li><li>NotebookLM</li><li>MCP</li><li>Claude</li><li data-i18n="skills.g2.c5">Agentes con RAG</li><li>Prompt engineering</li></ul>
+          </article>
+
+          <article class="tile tile-sec spot reveal">
+            <div class="tile-head"><i class="ph ph-shield-check" aria-hidden="true"></i><h3 data-i18n="skills.g3">Seguridad</h3></div>
+            <ul class="chips"><li>DLP</li><li data-i18n="skills.g3.c2">Comité de Excepciones</li><li data-i18n="skills.g3.c3">Ciberresiliencia</li><li data-i18n="skills.g3.c4">Ingeniería social</li></ul>
+          </article>
+
+          <article class="tile tile-dev spot reveal">
+            <div class="tile-head"><i class="ph ph-code" aria-hidden="true"></i><h3 data-i18n="skills.g4">Desarrollo</h3></div>
+            <ul class="chips"><li>Java</li><li>Spring Boot</li><li>TypeScript</li><li>React</li><li>Next.js</li><li>Angular</li><li>NestJS</li><li>Python</li><li>Kotlin</li><li>Guidewire</li></ul>
+          </article>
+
+          <article class="tile tile-data spot reveal">
+            <div class="tile-head"><i class="ph ph-database" aria-hidden="true"></i><h3 data-i18n="skills.g5">Datos y ML</h3></div>
+            <ul class="chips"><li>SQL</li><li>PostgreSQL</li><li>MongoDB</li><li>Power BI</li><li>scikit-learn</li><li>YOLOv8</li></ul>
+          </article>
+
+          <article class="tile tile-tools spot reveal">
+            <div class="tile-head"><i class="ph ph-toolbox" aria-hidden="true"></i><h3 data-i18n="skills.g6">Forma de trabajo</h3></div>
+            <ul class="chips"><li>Git</li><li>Docker</li><li>Linux</li><li>Scrum</li><li data-i18n="skills.g6.c5">Mentoría técnica</li><li data-i18n="skills.g6.c6">Clientes internos</li></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FORMACIÓN ================= -->
+    <section id="educacion" class="edu section">
+      <div class="container edu-grid">
+        <h2 class="section-title split-words" data-i18n="edu.title">Formación</h2>
+        <div>
+          <ul class="edu-list">
+            <li class="edu-row reveal">
+              <img src="assets/img/logo-unmsm.webp" alt="Escudo de la UNMSM" width="160" height="160" loading="lazy">
+              <div class="edu-text">
+                <h3 data-i18n="edu.e1.t">Ingeniería de Sistemas e Informática</h3>
+                <p data-i18n="edu.e1.s">Universidad Nacional Mayor de San Marcos, quinto superior</p>
+              </div>
+              <span class="edu-year" data-i18n="edu.e1.y">2022 - hoy</span>
+            </li>
+            <li class="edu-row reveal">
+              <img src="assets/img/logo-britanico.webp" alt="Logo del Británico" width="160" height="160" loading="lazy">
+              <div class="edu-text">
+                <h3 data-i18n="edu.e2.t">Inglés avanzado</h3>
+                <p>Instituto Británico</p>
+              </div>
+              <span class="edu-year">2018 - 2021</span>
+            </li>
+            <li class="edu-row reveal">
+              <img src="assets/img/logo-ccex.webp" alt="Logo de la Cámara de Comercio Exterior" width="160" height="160" loading="lazy">
+              <div class="edu-text">
+                <h3 data-i18n="edu.e3.t">Análisis de datos con Pandas y Power BI</h3>
+                <p data-i18n="edu.e3.s">Cámara de Comercio Exterior</p>
+              </div>
+            </li>
+          </ul>
+
+          <details class="courses reveal">
+            <summary><span data-i18n="edu.courses">Más cursos y certificaciones</span><i class="ph ph-plus" aria-hidden="true"></i></summary>
+            <ul>
+              <li data-i18n="edu.c1">Norma de Seguridad de la Información, BBVA Campus (2026)</li>
+              <li data-i18n="edu.c2">Norma de GEUC y eliminación del Shadow IT, BBVA Campus (2026)</li>
+              <li>Scrum - The Overview, BBVA Campus (2026)</li>
+              <li data-i18n="edu.c4">Análisis de datos con R Studio, Skill - Lima Educa</li>
+              <li data-i18n="edu.c5">Bases de datos con SQL Server, MySQL y PostgreSQL, Skill - Lima Educa</li>
+              <li data-i18n="edu.c6">Python aplicado al análisis de datos ambientales, FISMATLAB</li>
+              <li data-i18n="edu.c7">JavaScript y Angular: desarrollo de sistemas web, UNMSM</li>
+              <li data-i18n="edu.c8">Curso profesional de Node.js, CódigoFacilito</li>
+              <li data-i18n="edu.c9">Ingeniería de prompts, CódigoFacilito</li>
+            </ul>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACTO ================= -->
+    <section id="contacto" class="contact">
+      <div class="container">
+        <h2 class="contact-title split-words" data-i18n="contact.title">¿Construimos algo juntos?</h2>
+
+        <div class="contact-grid">
+          <div class="contact-info">
+            <p class="contact-lead reveal" data-i18n="contact.lead">Abierto a conversar sobre automatización, arquitectura, seguridad y proyectos de software.</p>
+            <div class="email-row reveal">
+              <a class="email-big" href="mailto:richard232108@gmail.com">richard232108@gmail.com</a>
+              <button type="button" class="copy-btn" id="copy-email" data-email="richard232108@gmail.com">
+                <i class="ph ph-copy" aria-hidden="true"></i><span data-i18n="contact.copy">Copiar</span>
+              </button>
+            </div>
+            <ul class="socials reveal">
+              <li><a href="https://www.linkedin.com/in/richard-pillaca21" target="_blank" rel="noopener" class="social magnetic"><i class="ph ph-linkedin-logo" aria-hidden="true"></i>LinkedIn</a></li>
+              <li><a href="https://github.com/Lichal2108" target="_blank" rel="noopener" class="social magnetic"><i class="ph ph-github-logo" aria-hidden="true"></i>GitHub</a></li>
+              <li><a href="assets/Richard-Pillaca-CV.pdf" download class="social social-cv magnetic"><i class="ph ph-download-simple" aria-hidden="true"></i><span data-i18n="contact.cv">Descargar CV</span></a></li>
+            </ul>
           </div>
-          <div class="field">
-            <label for="f-email" data-i18n="form.email">Correo</label>
-            <input id="f-email" type="email" name="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
-            <p class="field-error" id="e-email" data-i18n="form.errEmail">Escribe un correo válido, por ejemplo nombre@dominio.com.</p>
-          </div>
-          <div class="field">
-            <label for="f-asunto" data-i18n="form.subject">Asunto</label>
-            <input id="f-asunto" type="text" name="asunto" required aria-describedby="e-asunto">
-            <p class="field-error" id="e-asunto" data-i18n="form.errSubject">Indica el asunto del mensaje.</p>
-          </div>
-          <div class="field">
-            <label for="f-mensaje" data-i18n="form.message">Mensaje</label>
-            <textarea id="f-mensaje" name="mensaje" rows="5" required aria-describedby="e-mensaje"></textarea>
-            <p class="field-error" id="e-mensaje" data-i18n="form.errMessage">Escribe tu mensaje.</p>
-          </div>
-          <button type="submit" class="btn btn-primary btn-submit"><span data-i18n="form.send">Enviar mensaje</span><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i></button>
-          <p class="form-status" role="status" aria-live="polite"></p>
-        </form>
+
+          <form class="contact-form reveal" name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+            <input type="hidden" name="form-name" value="contacto">
+            <p class="hp"><label>No llenar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+            <div class="field-row">
+              <div class="field">
+                <label for="f-nombre" data-i18n="form.name">Nombre</label>
+                <input id="f-nombre" type="text" name="nombre" autocomplete="name" required aria-describedby="e-nombre">
+                <p class="field-error" id="e-nombre" data-i18n="form.errName">Escribe tu nombre.</p>
+              </div>
+              <div class="field">
+                <label for="f-email" data-i18n="form.email">Correo</label>
+                <input id="f-email" type="email" name="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
+                <p class="field-error" id="e-email" data-i18n="form.errEmail">Escribe un correo válido, por ejemplo nombre@dominio.com.</p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-asunto" data-i18n="form.subject">Asunto</label>
+              <input id="f-asunto" type="text" name="asunto" required aria-describedby="e-asunto">
+              <p class="field-error" id="e-asunto" data-i18n="form.errSubject">Indica el asunto del mensaje.</p>
+            </div>
+            <div class="field">
+              <label for="f-mensaje" data-i18n="form.message">Mensaje</label>
+              <textarea id="f-mensaje" name="mensaje" rows="4" required aria-describedby="e-mensaje"></textarea>
+              <p class="field-error" id="e-mensaje" data-i18n="form.errMessage">Escribe tu mensaje.</p>
+            </div>
+            <button type="submit" class="btn btn-light btn-submit magnetic"><span data-i18n="form.send">Enviar mensaje</span><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i></button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© 2026 Richard Josué Pillaca Machaca</p>
-      <div class="footer-links">
-        <a href="https://github.com/Lichal2108" target="_blank" rel="noopener" aria-label="GitHub"><i class="ph ph-github-logo" aria-hidden="true"></i></a>
-        <a href="https://www.linkedin.com/in/richard-pillaca21" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ph ph-linkedin-logo" aria-hidden="true"></i></a>
-        <a href="mailto:richard232108@gmail.com" aria-label="Email"><i class="ph ph-envelope-simple" aria-hidden="true"></i></a>
+    <div class="container">
+      <p class="wordmark" aria-hidden="true"><span class="chars">Pillaca</span></p>
+      <div class="footer-row">
+        <p>© 2026 Richard Josué Pillaca Machaca</p>
+        <a href="#inicio" class="to-top magnetic"><span data-i18n="footer.top">Volver arriba</span><i class="ph ph-arrow-up" aria-hidden="true"></i></a>
       </div>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
