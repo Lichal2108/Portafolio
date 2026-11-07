@@ -1,907 +1,296 @@
-// Navegación móvil
-const navToggle = document.querySelector('.nav-toggle');
-const navMenu = document.querySelector('.nav-menu');
+(function () {
+  'use strict';
 
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    navToggle.classList.toggle('active');
-});
+  var root = document.documentElement;
+  root.classList.add('js');
 
-// Cerrar menú al hacer clic en un enlace
-document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
+  function store(key, value) {
+    try {
+      if (value === undefined) return localStorage.getItem(key);
+      localStorage.setItem(key, value);
+    } catch (e) { return null; }
+  }
+
+  /* ---------------- Idiomas ----------------
+     El HTML trae el texto en español. Al cargar se guarda ese texto como
+     diccionario "es" y aquí solo vive la traducción al inglés. */
+  var en = {
+    'skip': 'Skip to content',
+    'nav.about': 'About',
+    'nav.experience': 'Experience',
+    'nav.projects': 'Projects',
+    'nav.skills': 'Skills',
+    'nav.contact': 'Contact',
+    'themeToggle': 'Toggle theme',
+    'menu': 'Open menu',
+
+    'hero.eyebrow': 'BBVA Peru · IPA Architecture',
+    'hero.sub': 'Architecture Analyst in Intelligent Process Automation. Previously 8 months in Information Security. I automate processes and build software with AI.',
+    'hero.cta1': 'See experience',
+    'hero.cta2': 'Get in touch',
+    'hero.photoAlt': 'Richard Pillaca sitting in front of a blue sign with plants behind',
+
+    'about.title': 'About me',
+    'about.p1': 'I study Systems and Computer Engineering at Universidad Nacional Mayor de San Marcos and work at BBVA Peru. I started in Information Security, where I was part of the Exceptions Committee, DLP management and the cyber resilience initiatives.',
+    'about.p2': 'Today I am an Architecture Analyst in Intelligent Process Automation (IPA). I support platforms such as DataX, Document Generator and Robotics, and I bring generative AI into the team’s day-to-day work.',
+    'about.p3': 'Outside the bank I build custom software: AI agents that answer customers on WhatsApp, AI content pipelines and web apps with React, Next.js and Spring Boot.',
+    'about.f1k': 'Now',
+    'about.f1v': 'IPA Architecture Analyst, BBVA Peru',
+    'about.f2k': 'Before',
+    'about.f2v': 'Information Security Intern, BBVA Peru',
+    'about.f3k': 'Education',
+    'about.f3v': 'Systems and Computer Engineering, UNMSM',
+    'about.f4k': 'Languages',
+    'about.f4v': 'Native Spanish, advanced English',
+    'about.f5k': 'Location',
+
+    'exp.title': 'Experience',
+    'exp.current': 'Current role',
+    'exp.r1.dates': 'Jul 2026 - present',
+    'exp.r1.title': 'Architecture Analyst, Intelligent Process Automation (IPA)',
+    'exp.r1.area': 'Engineering · Architecture',
+    'exp.r1.p1': 'Drive and track the 2027 strategy to migrate the bank’s data transfer technology, which is reaching obsolescence.',
+    'exp.r1.p2': 'Recertification and clean-up of data transfer components: deciding what gets archived and what gets reconfigured (MX engine instead of PER).',
+    'exp.r1.p3': 'Automation pilot to mass-migrate document templates from legacy into Document Generator, plus its governance and support.',
+    'exp.r1.p4': 'Generative AI automations (Gems, NotebookLM, MCP) for the team and other disciplines.',
+    'exp.r1.p5': 'On-call rotation for production incidents and progress reporting to syncs, the leaders’ committee and management.',
+    'exp.r1.c4': 'Generative AI',
+    'exp.r1.c5': 'BEA Upsilon Psi event',
+    'exp.r2.dates': '2025 - 2026 · 8 months',
+    'exp.r2.title': 'Information Security Intern',
+    'exp.r2.area': 'Information security',
+    'exp.r2.p1': 'Member of the security Exceptions Committee: reviewing requests for exceptions to policy and the risk the bank takes on in each case.',
+    'exp.r2.p2': 'DLP (Data Loss Prevention) management: following up on policies, alerts and data leakage cases.',
+    'exp.r2.p3': 'Contributed to the bank’s cyber resilience initiatives.',
+    'exp.r2.c1': 'Exceptions Committee',
+    'exp.r2.c3': 'Cyber resilience',
+    'exp.r2.c4': 'Risk management',
+
+    'proj.title': 'Projects',
+    'proj.lead': 'Work for real clients and personal projects. Private repositories are shown without a link to the code.',
+    'proj.site': 'Visit site',
+    'proj.private': 'Private repository',
+    'proj.more': 'More repositories on GitHub',
+    'proj.p1.kicker': 'Client: Tekneka',
+    'proj.p1.title': 'WhatsApp sales agent and website',
+    'proj.p1.desc': 'AI agent that answers customers on WhatsApp using only the company’s documentation: it cites its sources, escalates what it does not know to the owner and logs every customer by product. Includes the new public website connected to WooCommerce.',
+    'proj.p1.alt': 'Tekneka website home page showing its red sharps containers',
+    'proj.p2.desc': 'Pipeline that turns an idea into an animated story video for YouTube: script with Claude, consistent characters, per-scene images, narration, subtitles and vertical or horizontal render.',
+    'proj.p3.desc': 'Operations management platform: inventory with map, warehouse, spare parts, equipment, staff, kanban-style workflows and photo reports.',
+    'proj.p4.desc': 'Traffic monitoring on Lima’s Vía Expresa: detects vehicles and plates with YOLOv8 and PaddleOCR, writes violation reports with Gemini and predicts accident severity.',
+    'proj.p5.title': 'Applied machine learning',
+    'proj.p5.desc': 'Regression and classification models with a GUI and metric comparison: air pollution, forest fires with 118k records and breast cancer diagnosis.',
+    'proj.p5.l1': 'Pollution',
+    'proj.p5.l2': 'Forest fires',
+    'proj.p5.l3': 'Breast cancer',
+    'proj.p6.title': 'Auto repair shop system',
+    'proj.p6.desc': 'Angular frontend with financial and operational dashboards, and a Spring Boot microservices backend with JWT authentication.',
+    'proj.p6.alt': 'Illustration of an auto repair shop',
+    'proj.p7.title': 'IoT smart home',
+    'proj.p7.desc': 'ESP32 automation: fire detection, remote room monitoring and real-time data with Firebase.',
+    'proj.p7.alt': 'Diagram of a smart home with connected sensors',
+
+    'skills.title': 'Skills',
+    'skills.g1': 'Architecture and automation',
+    'skills.g1.c5': 'Platform governance',
+    'skills.g1.c6': 'Incident management',
+    'skills.g2': 'Generative AI',
+    'skills.g2.c5': 'RAG agents',
+    'skills.g3': 'Information security',
+    'skills.g3.c2': 'Exception management',
+    'skills.g3.c3': 'Cyber resilience',
+    'skills.g3.c4': 'Risk management',
+    'skills.g4': 'Development',
+    'skills.g5': 'Data and machine learning',
+    'skills.g6': 'Tools and ways of working',
+    'skills.g6.c5': 'Technical mentoring',
+    'skills.g6.c6': 'Internal client support',
+
+    'edu.title': 'Education',
+    'edu.e1.t': 'Systems and Computer Engineering',
+    'edu.e2.t': 'Advanced English',
+    'edu.e3.t': 'Python and Power BI',
+    'edu.e3.s': 'Chamber of Foreign Trade',
+
+    'contact.title': 'Let’s talk',
+    'contact.lead': 'Open to conversations about automation, architecture, security and software projects.',
+    'contact.cv': 'Download CV',
+    'form.name': 'Name',
+    'form.email': 'Email',
+    'form.subject': 'Subject',
+    'form.message': 'Message',
+    'form.errName': 'Please enter your name.',
+    'form.errEmail': 'Enter a valid email, for example name@domain.com.',
+    'form.errSubject': 'Please add a subject.',
+    'form.errMessage': 'Please write your message.',
+    'form.send': 'Send message',
+    'form.sending': 'Sending...',
+    'form.ok': 'Message sent. I will get back to you soon.',
+    'form.fail': 'The message could not be sent. Please email me directly.'
+  };
+
+  var esExtra = {
+    'form.sending': 'Enviando...',
+    'form.ok': 'Mensaje enviado. Te responderé pronto.',
+    'form.fail': 'No se pudo enviar el mensaje. Escríbeme directo al correo.'
+  };
+
+  var es = {};
+  document.querySelectorAll('[data-i18n]').forEach(function (el) {
+    es[el.getAttribute('data-i18n')] = el.textContent;
+  });
+  document.querySelectorAll('[data-i18n-alt]').forEach(function (el) {
+    es[el.getAttribute('data-i18n-alt')] = el.getAttribute('alt');
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+    es[el.getAttribute('data-i18n-aria')] = el.getAttribute('aria-label');
+  });
+  Object.keys(esExtra).forEach(function (k) { es[k] = esExtra[k]; });
+
+  var dict = { es: es, en: en };
+  var lang = 'es';
+
+  function t(key) { return (dict[lang] && dict[lang][key]) || es[key] || ''; }
+
+  function setLang(next) {
+    lang = next === 'en' ? 'en' : 'es';
+    root.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var v = t(el.getAttribute('data-i18n'));
+      if (v) el.textContent = v;
     });
-});
-
-// Animación de barras de habilidades
-function animateSkillBars() {
-    const skillBars = document.querySelectorAll('.skill-progress');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const progressBar = entry.target;
-                const width = progressBar.style.width;
-                progressBar.style.width = '0%';
-                
-                setTimeout(() => {
-                    progressBar.style.width = width;
-                }, 200);
-                
-                observer.unobserve(progressBar);
-            }
-        });
-    }, { threshold: 0.5 });
-    
-    skillBars.forEach(bar => {
-        observer.observe(bar);
+    document.querySelectorAll('[data-i18n-alt]').forEach(function (el) {
+      var v = t(el.getAttribute('data-i18n-alt'));
+      if (v) el.setAttribute('alt', v);
     });
-}
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      var v = t(el.getAttribute('data-i18n-aria'));
+      if (v) el.setAttribute('aria-label', v);
+    });
+    document.querySelectorAll('.lang-btn').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
+    });
+    store('lang', lang);
+  }
 
-// Efecto de scroll suave para enlaces internos
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+  document.querySelectorAll('.lang-btn').forEach(function (b) {
+    b.addEventListener('click', function () { setLang(b.dataset.lang); });
+  });
+  var savedLang = store('lang');
+  if (savedLang === 'en') setLang('en');
+
+  /* ---------------- Tema ---------------- */
+  var themeBtn = document.getElementById('theme-toggle');
+  function currentTheme() {
+    var explicit = root.getAttribute('data-theme');
+    if (explicit) return explicit;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  themeBtn.addEventListener('click', function () {
+    var next = currentTheme() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    store('theme', next);
+  });
+
+  /* ---------------- Menú móvil ---------------- */
+  var navToggle = document.getElementById('nav-toggle');
+  var navLinks = document.getElementById('nav-links');
+  function closeMenu() {
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }
+  navToggle.addEventListener('click', function () {
+    var open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(open));
+  });
+  navLinks.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMenu); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+
+  /* ---------------- Header y enlace activo ---------------- */
+  var header = document.querySelector('.site-header');
+  var hero = document.getElementById('inicio');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      header.classList.toggle('scrolled', !entries[0].isIntersecting);
+    }, { rootMargin: '-80px 0px 0px 0px' }).observe(hero.querySelector('.hero-title'));
+
+    var links = {};
+    navLinks.querySelectorAll('a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+    var sectionObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        Object.keys(links).forEach(function (id) { links[id].classList.remove('active'); });
+        var link = links[entry.target.id];
+        if (link) link.classList.add('active');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    document.querySelectorAll('main section[id]').forEach(function (s) { sectionObserver.observe(s); });
+
+    /* ---------------- Aparición al hacer scroll ---------------- */
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
         }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(function (el, i) {
+      el.style.transitionDelay = (i % 3) * 60 + 'ms';
+      revealObserver.observe(el);
     });
-});
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+  }
 
-// Header con efecto de transparencia al hacer scroll
-function handleHeaderScroll() {
-    const header = document.querySelector('.header');
-    const scrollPosition = window.scrollY;
-    // Mantener fondo negro siempre
-    header.style.background = '#111';
-    if (scrollPosition > 100) {
-        header.style.boxShadow = '0 2px 20px rgba(44, 62, 80, 0.15)';
-    } else {
-        header.style.boxShadow = '0 2px 20px rgba(44, 62, 80, 0.1)';
-    }
-}
+  /* ---------------- Formulario (Netlify Forms) ---------------- */
+  var form = document.querySelector('form[name="contacto"]');
+  var statusEl = form.querySelector('.form-status');
+  var submitBtn = form.querySelector('.btn-submit');
+  var submitLabel = submitBtn.querySelector('[data-i18n]');
 
-// Animación de elementos al hacer scroll
-function animateOnScroll() {
-    const elements = document.querySelectorAll('.skill-category, .project-card, .contact-info, .contact-form');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, { threshold: 0.1 });
-    
-    elements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(30px)';
-        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(element);
+  function validateField(input) {
+    var ok = input.value.trim() !== '' && (input.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim()));
+    input.closest('.field').classList.toggle('invalid', !ok);
+    input.setAttribute('aria-invalid', String(!ok));
+    return ok;
+  }
+  form.querySelectorAll('input[required], textarea[required]').forEach(function (input) {
+    input.addEventListener('blur', function () { if (input.value) validateField(input); });
+    input.addEventListener('input', function () {
+      if (input.closest('.field').classList.contains('invalid')) validateField(input);
     });
-}
+  });
 
-// Formulario de contacto
-function handleContactForm() {
-    const form = document.querySelector('.contact-form form');
-    
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Obtener valores del formulario
-        const formData = new FormData(form);
-        const name = form.querySelector('input[type="text"]').value;
-        const email = form.querySelector('input[type="email"]').value;
-        const subject = form.querySelector('input[placeholder="Asunto"]').value;
-        const message = form.querySelector('textarea').value;
-        
-        // Validación básica
-        if (!name || !email || !subject || !message) {
-            alert('Por favor, completa todos los campos.');
-            return;
-        }
-        
-        // Simular envío (aquí puedes agregar la lógica real de envío)
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        
-        submitBtn.textContent = 'Enviando...';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            alert('¡Mensaje enviado con éxito! Te contactaremos pronto.');
-            form.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 2000);
-    });
-}
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    statusEl.textContent = '';
+    statusEl.className = 'form-status';
+    var fields = Array.prototype.slice.call(form.querySelectorAll('input[required], textarea[required]'));
+    var invalid = fields.filter(function (f) { return !validateField(f); });
+    if (invalid.length) { invalid[0].focus(); return; }
 
-// Contador animado para estadísticas (opcional)
-function animateCounters() {
-    const counters = document.querySelectorAll('.counter');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const counter = entry.target;
-                const target = parseInt(counter.getAttribute('data-target'));
-                const duration = 2000; // 2 segundos
-                const increment = target / (duration / 16); // 60fps
-                let current = 0;
-                
-                const updateCounter = () => {
-                    current += increment;
-                    if (current < target) {
-                        counter.textContent = Math.floor(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
-                
-                updateCounter();
-                observer.unobserve(counter);
-            }
-        });
-    }, { threshold: 0.5 });
-    
-    counters.forEach(counter => {
-        observer.observe(counter);
-    });
-}
+    submitBtn.disabled = true;
+    submitLabel.textContent = t('form.sending');
 
-// Efecto de parallax para el hero
-function handleParallax() {
-    const heroBg = document.querySelector('.hero-bg');
-    
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-        heroBg.style.transform = `translateY(${rate}px)`;
-    });
-}
-
-// Lazy loading para imágenes
-function lazyLoadImages() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
-}
-
-// Tooltip para las barras de habilidades
-function addSkillTooltips() {
-    const skillItems = document.querySelectorAll('.skill-item');
-    
-    skillItems.forEach(item => {
-        const progressBar = item.querySelector('.skill-progress');
-        const percentage = item.querySelector('.skill-info span:last-child').textContent;
-        
-        item.addEventListener('mouseenter', () => {
-            const tooltip = document.createElement('div');
-            tooltip.className = 'skill-tooltip';
-            tooltip.textContent = `Nivel: ${percentage}`;
-            tooltip.style.cssText = `
-                position: absolute;
-                background: #333;
-                color: white;
-                padding: 5px 10px;
-                border-radius: 5px;
-                font-size: 12px;
-                z-index: 1000;
-                pointer-events: none;
-                transform: translateY(-30px);
-            `;
-            
-            item.style.position = 'relative';
-            item.appendChild(tooltip);
-        });
-        
-        item.addEventListener('mouseleave', () => {
-            const tooltip = item.querySelector('.skill-tooltip');
-            if (tooltip) {
-                tooltip.remove();
-            }
-        });
-    });
-}
-
-// Animación de entrada para secciones y objetos
-function animateSectionsOnScroll() {
-    const animatedSections = document.querySelectorAll('section, .about-content, .skills-grid, .projects-grid, .contact-content');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.15 });
-    animatedSections.forEach(section => observer.observe(section));
-
-    // Animación para tarjetas de proyectos y skills
-    document.querySelectorAll('.project-card').forEach(card => {
-        card.classList.add('animated-zoomIn');
-    });
-    document.querySelectorAll('.skill-category').forEach(skill => {
-        skill.classList.add('animated-zoomIn');
-    });
-}
-
-// Protección de derechos de autor - Detectar acceso desde Google
-function checkReferrerAndProtect() {
-    const referrer = document.referrer;
-    const isFromGoogle = referrer.includes('google.com') || 
-                        referrer.includes('google.pe') || 
-                        referrer.includes('google.co') ||
-                        referrer.includes('google.') ||
-                        referrer.includes('bing.com') ||
-                        referrer.includes('yahoo.com');
-    
-    if (isFromGoogle) {
-        // Ocultar todo el contenido original
-        document.body.style.display = 'none';
-        
-        // Limpiar el body completamente
-        document.body.innerHTML = '';
-        document.body.style.display = 'block';
-        
-        // Crear overlay de protección
-        const overlay = document.createElement('div');
-        overlay.id = 'copyright-overlay';
-        overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            z-index: 2147483647;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Poppins', sans-serif;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        `;
-        
-        overlay.innerHTML = `
-            <div style="max-width: 600px; background: rgba(0,0,0,0.9); padding: 3rem; border-radius: 15px; border: 2px solid #ff6b6b; box-shadow: 0 0 50px rgba(255,107,107,0.3);">
-                <h1 style="color: #ff6b6b; font-size: 2.5rem; margin-bottom: 1rem; text-transform: uppercase; user-select: none;">
-                    ⚠️ Acceso Restringido
-                </h1>
-                <h2 style="color: #ffd93d; font-size: 1.8rem; margin-bottom: 2rem; user-select: none;">
-                    Derechos de Autor Protegidos
-                </h2>
-                <p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 2rem; user-select: none;">
-                    Este contenido está protegido por derechos de autor. El acceso desde motores de búsqueda no está permitido.
-                </p>
-                <div style="background: rgba(255,107,107,0.1); padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; user-select: none;">
-                    <p style="font-size: 1.1rem; color: #ffd93d;">
-                        <strong>Propietario:</strong> Richard Josué Pillaca Machaca<br>
-                        <strong>Derechos Reservados:</strong> © 2024<br>
-                        <strong>Contacto:</strong> richard232108@gmail.com
-                    </p>
-                </div>
-                <p style="font-size: 1rem; color: #ccc; user-select: none;">
-                    Para acceder a este contenido, contacta directamente al propietario.
-                </p>
-                <div style="margin-top: 2rem;">
-                    <button onclick="window.close()" style="
-                        background: #ff6b6b;
-                        color: white;
-                        border: none;
-                        padding: 12px 30px;
-                        border-radius: 25px;
-                        font-size: 1.1rem;
-                        cursor: pointer;
-                        margin: 0 10px;
-                        transition: all 0.3s ease;
-                        user-select: none;
-                    " onmouseover="this.style.background='#ff5252'" onmouseout="this.style.background='#ff6b6b'">
-                        Cerrar Ventana
-                    </button>
-                    <button onclick="window.history.back()" style="
-                        background: #4ecdc4;
-                        color: white;
-                        border: none;
-                        padding: 12px 30px;
-                        border-radius: 25px;
-                        font-size: 1.1rem;
-                        cursor: pointer;
-                        margin: 0 10px;
-                        transition: all 0.3s ease;
-                        user-select: none;
-                    " onmouseover="this.style.background='#45b7aa'" onmouseout="this.style.background='#4ecdc4'">
-                        Volver Atrás
-                    </button>
-                </div>
-            </div>
-        `;
-        
-        // Agregar al body
-        document.body.appendChild(overlay);
-        
-        // Prevenir scroll
-        document.body.style.overflow = 'hidden';
-        document.documentElement.style.overflow = 'hidden';
-        
-        // Protección contra inspección de elementos
-        let devtools = { open: false, orientation: null };
-        
-        // Detectar apertura de DevTools
-        setInterval(() => {
-            const threshold = 160;
-            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-            
-            if (widthThreshold || heightThreshold) {
-                if (!devtools.open) {
-                    devtools.open = true;
-                    devtools.orientation = widthThreshold ? 'vertical' : 'horizontal';
-                    // Redirigir a una página de error o mostrar mensaje
-                    window.location.href = 'about:blank';
-                }
-            } else {
-                devtools.open = false;
-                devtools.orientation = null;
-            }
-        }, 500);
-        
-        // Prevenir todas las teclas
-        document.addEventListener('keydown', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            return false;
-        }, true);
-        
-        // Prevenir clic derecho
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        }, true);
-        
-        // Prevenir selección de texto
-        document.addEventListener('selectstart', function(e) {
-            e.preventDefault();
-            return false;
-        }, true);
-        
-        // Prevenir drag and drop
-        document.addEventListener('dragstart', function(e) {
-            e.preventDefault();
-            return false;
-        }, true);
-        
-        // Prevenir copiar
-        document.addEventListener('copy', function(e) {
-            e.preventDefault();
-            return false;
-        }, true);
-        
-        // Prevenir pegar
-        document.addEventListener('paste', function(e) {
-            e.preventDefault();
-            return false;
-        }, true);
-        
-        // Prevenir cortar
-        document.addEventListener('cut', function(e) {
-            e.preventDefault();
-            return false;
-        }, true);
-        
-        // Prevenir clics fuera del overlay
-        overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-        }, true);
-        
-        // Protección adicional contra F12 y otras teclas
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'F12' || 
-                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-                (e.ctrlKey && e.shiftKey && e.key === 'C') ||
-                (e.ctrlKey && e.key === 'U') ||
-                (e.ctrlKey && e.key === 'S') ||
-                (e.ctrlKey && e.key === 'P')) {
-                e.preventDefault();
-                e.stopPropagation();
-                return false;
-            }
-        }, true);
-        
-        // Prevenir acceso a la consola
-        console.log = console.warn = console.error = console.info = console.debug = function() {};
-        
-        // Protección contra debugger
-        setInterval(() => {
-            debugger;
-        }, 100);
-        
-        return true; // Indica que se activó la protección
-    }
-    return false; // No se activó la protección
-}
-
-// Función para manejar la descarga del CV con notificación
-function handleCVDownload() {
-    const cvButtons = document.querySelectorAll('.btn-cv');
-    
-    cvButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Crear elemento de descarga
-            const link = document.createElement('a');
-            link.href = 'RichardPillaca Portafolio.pdf';
-            link.download = 'RichardPillaca Portafolio.pdf';
-            link.style.display = 'none';
-            
-            // Agregar al DOM y hacer clic
-            document.body.appendChild(link);
-            link.click();
-            
-            // Remover el elemento
-            document.body.removeChild(link);
-            
-            // Mostrar notificación de descarga exitosa
-            showDownloadNotification();
-        });
-    });
-}
-
-// Sistema de traducción
-const translations = {
-    es: {
-        // Navegación
-        'inicio': 'Inicio',
-        'sobre-mi': 'Sobre Mí',
-        'habilidades': 'Habilidades',
-        'proyectos': 'Proyectos',
-        'contacto': 'Contacto',
-        
-        // Hero Section
-        'ingeniero-sistemas': 'Ingeniero de Sistemas',
-        'estudiante-8-ciclo': 'Estudiante del 8° ciclo en la Universidad Nacional Mayor de San Marcos',
-        'ver-proyectos': 'Ver Proyectos',
-        'contactar': 'Contactar',
-        'descargar-cv': 'Descargar CV',
-        
-        // Sobre Mí
-        'sobre-mi-titulo': 'Sobre Mí',
-        'sobre-mi-texto-1': 'Hola, soy Richard Pillaca, estudiante de Ingeniería de Sistemas en la Universidad Nacional Mayor de San Marcos. Apasionado por el desarrollo web, me especializo en la creación de aplicaciones modernas, seguras y escalables, utilizando tecnologías como Angular, React, Spring Boot, Python y PostgreSQL. Mi enfoque está en construir soluciones digitales que mejoren la experiencia del usuario y optimicen los procesos de negocio.',
-        'sobre-mi-texto-2': 'Me considero una persona proactiva, con gran capacidad de aprendizaje y adaptabilidad. Disfruto trabajar en equipo, liderar proyectos y enfrentar nuevos retos tecnológicos. Mi objetivo es seguir creciendo como desarrollador web, aportando valor a cada proyecto y manteniéndome siempre actualizado en las tendencias del sector.',
-        'datos-personales': 'Datos Personales',
-        'nombre': 'Nombre',
-        'formacion-profesional': 'Formación Profesional',
-        'cumpleanos': 'Cumpleaños',
-        'ubicacion': 'Ubicación',
-        'telefono': 'Teléfono',
-        'email': 'Email',
-        'cargo': 'Cargo',
-        'intereses': 'Intereses',
-        
-        // Educación
-        'educacion': 'Educación',
-        'ingenieria-sistemas': 'Ingeniería de Sistemas',
-        'universidad-san-marcos': 'Universidad Nacional Mayor de San Marcos',
-        '8-ciclo-en-curso': '8° Ciclo - En curso',
-        'curso-python': 'Curso de Python',
-        'camara-comercio-exterior': 'Cámara de Comercio Exterior',
-        'programacion-python-completado': 'Programación en Python - Completado',
-        'ingles-avanzado': 'Inglés Avanzado',
-        'brintanico': 'Brintánico',
-        'nivel-avanzado-completado': 'Nivel Avanzado - Completado',
-        
-        // Habilidades
-        'habilidades-blandas': 'Habilidades Blandas',
-        'habilidades-tecnicas': 'Habilidades Técnicas',
-        'lenguajes-programacion': 'Lenguajes de Programación',
-        'desarrollo-web': 'Desarrollo Web',
-        'bases-datos': 'Bases de Datos',
-        'herramientas-tecnologias': 'Herramientas y Tecnologías',
-        'herramientas-analisis-datos': 'Herramientas de Análisis de Datos',
-        
-        // Proyectos
-        'proyectos-repositorios': 'Proyectos y Repositorios',
-        'frontend-taller': 'Frontend del Sistema de Taller Automotriz',
-        'backend-taller': 'Backend del Sistema de Taller Automotriz',
-        'casa-inteligente': 'Casa Inteligente IoT',
-        'pagina-prueba-sucasaire': 'Página de Prueba Sucasaire',
-        'frontend-taller-desc': 'Interfaz de usuario moderna y responsiva que incluye dashboards y paneles gráficos interactivos para el análisis financiero y la gestión operativa del taller automotriz. Permite visualizar métricas clave, reportes y estadísticas en tiempo real para la toma de decisiones.',
-        'backend-taller-desc': 'API robusta y segura basada en arquitectura de microservicios, que gestiona la lógica de negocio, usuarios, inventario y servicios del taller. Implementa autenticación y autorización mediante JWT (JSON Web Tokens) para garantizar la seguridad y privacidad de los datos.',
-        'casa-inteligente-desc': 'Proyecto de automatización de una casa inteligente utilizando IoT y microcontrolador ESP32. Incluye sistema de detección contra incendios, monitoreo de ambientes a distancia y almacenamiento de datos en tiempo real con Firebase.',
-        'pagina-prueba-sucasaire-desc': 'Prototipo de página web de contacto para Sucasaire (empresa ficticia) que demuestra técnicas modernas de desarrollo web. Incluye formularios con validación en tiempo real, animaciones CSS, contadores dinámicos, sistema de notificaciones y diseño completamente responsivo para todos los dispositivos.',
-        
-        // Contacto
-        'trabajemos-juntos': '¡Trabajemos juntos!',
-        'interesado-practicas': 'Estoy interesado en oportunidades de prácticas profesionales donde pueda aplicar mis habilidades y seguir aprendiendo.',
-        'enviar-mensaje': 'Enviar Mensaje',
-        'nombre-placeholder': 'Nombre',
-        'email-placeholder': 'Email',
-        'asunto-placeholder': 'Asunto',
-        'mensaje-placeholder': 'Mensaje',
-        
-        // Footer
-        'derechos-reservados': 'Todos los derechos reservados.'
-    },
-    en: {
-        // Navigation
-        'inicio': 'Home',
-        'sobre-mi': 'About Me',
-        'habilidades': 'Skills',
-        'proyectos': 'Projects',
-        'contacto': 'Contact',
-        
-        // Hero Section
-        'ingeniero-sistemas': 'Systems Engineer',
-        'estudiante-8-ciclo': '8th cycle student at the National University of San Marcos',
-        'ver-proyectos': 'View Projects',
-        'contactar': 'Contact',
-        'descargar-cv': 'Download CV',
-        
-        // About Me
-        'sobre-mi-titulo': 'About Me',
-        'sobre-mi-texto-1': 'Hello, I am Richard Pillaca, a Systems Engineering student at the National University of San Marcos. Passionate about web development, I specialize in creating modern, secure, and scalable applications using technologies such as Angular, React, Spring Boot, Python, and PostgreSQL. My focus is on building digital solutions that improve user experience and optimize business processes.',
-        'sobre-mi-texto-2': 'I consider myself a proactive person with great learning capacity and adaptability. I enjoy working in teams, leading projects, and facing new technological challenges. My goal is to continue growing as a web developer, adding value to each project and always staying updated with industry trends.',
-        'datos-personales': 'Personal Information',
-        'nombre': 'Name',
-        'formacion-profesional': 'Professional Training',
-        'cumpleanos': 'Birthday',
-        'ubicacion': 'Location',
-        'telefono': 'Phone',
-        'email': 'Email',
-        'cargo': 'Position',
-        'intereses': 'Interests',
-        
-        // Education
-        'educacion': 'Education',
-        'ingenieria-sistemas': 'Systems Engineering',
-        'universidad-san-marcos': 'National University of San Marcos',
-        '8-ciclo-en-curso': '8th Cycle - In progress',
-        'curso-python': 'Python Course',
-        'camara-comercio-exterior': 'Foreign Trade Chamber',
-        'programacion-python-completado': 'Python Programming - Completed',
-        'ingles-avanzado': 'Advanced English',
-        'brintanico': 'Brintánico',
-        'nivel-avanzado-completado': 'Advanced Level - Completed',
-        
-        // Skills
-        'habilidades-blandas': 'Soft Skills',
-        'habilidades-tecnicas': 'Technical Skills',
-        'lenguajes-programacion': 'Programming Languages',
-        'desarrollo-web': 'Web Development',
-        'bases-datos': 'Databases',
-        'herramientas-tecnologias': 'Tools and Technologies',
-        'herramientas-analisis-datos': 'Data Analysis Tools',
-        
-        // Projects
-        'proyectos-repositorios': 'Projects and Repositories',
-        'frontend-taller': 'Automotive Workshop System Frontend',
-        'backend-taller': 'Automotive Workshop System Backend',
-        'casa-inteligente': 'Smart Home IoT',
-        'pagina-prueba-sucasaire': 'Sucasaire Test Page',
-        'frontend-taller-desc': 'Modern and responsive user interface that includes interactive dashboards and graphical panels for financial analysis and operational management of the automotive workshop. Allows visualization of key metrics, reports and real-time statistics for decision making.',
-        'backend-taller-desc': 'Robust and secure API based on microservices architecture that manages business logic, users, inventory and workshop services. Implements authentication and authorization through JWT (JSON Web Tokens) to ensure data security and privacy.',
-        'casa-inteligente-desc': 'Smart home automation project using IoT and ESP32 microcontroller. Includes fire detection system, remote environment monitoring and real-time data storage with Firebase.',
-        'pagina-prueba-sucasaire-desc': 'Contact page prototype for Sucasaire (fictional company) that demonstrates modern web development techniques. Includes forms with real-time validation, CSS animations, dynamic counters, notification system and fully responsive design for all devices.',
-        
-        // Contact
-        'trabajemos-juntos': 'Let\'s work together!',
-        'interesado-practicas': 'I am interested in internship opportunities where I can apply my skills and continue learning.',
-        'enviar-mensaje': 'Send Message',
-        'nombre-placeholder': 'Name',
-        'email-placeholder': 'Email',
-        'asunto-placeholder': 'Subject',
-        'mensaje-placeholder': 'Message',
-        
-        // Footer
-        'derechos-reservados': 'All rights reserved.'
-    }
-};
-
-// Función para cambiar idioma
-function changeLanguage(lang) {
-    // Actualizar botones de idioma
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
-    
-    // Traducir contenido
-    const elements = document.querySelectorAll('[data-translate]');
-    elements.forEach(element => {
-        const key = element.getAttribute('data-translate');
-        if (translations[lang] && translations[lang][key]) {
-            element.textContent = translations[lang][key];
-        }
-    });
-    
-    // Traducir placeholders
-    const inputs = document.querySelectorAll('input[data-translate-placeholder], textarea[data-translate-placeholder]');
-    inputs.forEach(input => {
-        const key = input.getAttribute('data-translate-placeholder');
-        if (translations[lang] && translations[lang][key]) {
-            input.placeholder = translations[lang][key];
-        }
-    });
-    
-    // Guardar preferencia de idioma
-    localStorage.setItem('preferred-language', lang);
-    
-    // Mostrar notificación de cambio de idioma
-    showLanguageNotification(lang);
-}
-
-// Función para mostrar notificación de cambio de idioma
-function showLanguageNotification(lang) {
-    const notification = document.createElement('div');
-    notification.id = 'language-notification';
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-        color: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        z-index: 10000;
-        font-family: 'Poppins', sans-serif;
-        font-weight: 500;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transform: translateX(400px);
-        transition: transform 0.3s ease;
-        max-width: 300px;
-    `;
-    
-    const langText = lang === 'es' ? 'Español' : 'English';
-    const flagSrc = lang === 'es' ? 'BanderaPeruParaCambiarAIdiomaEspañol.svg' : 'BanderaPeruParaCambiarAIdiomaIngles.svg';
-    
-    notification.innerHTML = `
-        <img src="${flagSrc}" alt="${langText}" style="width: 20px; height: 20px; border-radius: 50%;">
-        <div>
-            <div style="font-weight: 600; margin-bottom: 2px;">Idioma cambiado</div>
-            <div style="font-size: 12px; opacity: 0.9;">Language changed to ${langText}</div>
-        </div>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    setTimeout(() => {
-        notification.style.transform = 'translateX(400px)';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, 3000);
-}
-
-// Función para inicializar el sistema de idioma
-function initializeLanguageSystem() {
-    // Agregar event listeners a los botones de idioma
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const lang = this.getAttribute('data-lang');
-            changeLanguage(lang);
-        });
-    });
-    
-    // Cargar idioma preferido del localStorage
-    const savedLang = localStorage.getItem('preferred-language');
-    if (savedLang && savedLang !== 'es') {
-        changeLanguage(savedLang);
-    }
-}
-
-// Función para mostrar notificación de descarga
-function showDownloadNotification() {
-    // Crear elemento de notificación
-    const notification = document.createElement('div');
-    notification.id = 'download-notification';
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-        color: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        z-index: 10000;
-        font-family: 'Poppins', sans-serif;
-        font-weight: 500;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transform: translateX(400px);
-        transition: transform 0.3s ease;
-        max-width: 300px;
-    `;
-    
-    notification.innerHTML = `
-        <i class="fas fa-check-circle" style="font-size: 18px; color: #fff;"></i>
-        <div>
-            <div style="font-weight: 600; margin-bottom: 2px;">¡Descarga Completada!</div>
-            <div style="font-size: 12px; opacity: 0.9;">Tu CV se ha descargado exitosamente</div>
-        </div>
-    `;
-    
-    // Agregar al body
-    document.body.appendChild(notification);
-    
-    // Animar entrada
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    // Remover después de 4 segundos
-    setTimeout(() => {
-        notification.style.transform = 'translateX(400px)';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, 4000);
-}
-
-// Inicializar todas las funciones cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', function() {
-    // Verificar protección de derechos de autor primero
-    if (checkReferrerAndProtect()) {
-        return; // Si se activó la protección, no continuar con el resto de funciones
-    }
-    
-    // Inicializar descarga del CV
-    handleCVDownload();
-    
-    // Inicializar sistema de idioma
-    initializeLanguageSystem();
-    
-    animateSkillBars();
-    animateOnScroll();
-    handleContactForm();
-    handleParallax();
-    lazyLoadImages();
-    addSkillTooltips();
-    animateSectionsOnScroll();
-    
-    // Event listeners
-    window.addEventListener('scroll', handleHeaderScroll);
-    
-    // Prevenir comportamiento por defecto de enlaces vacíos
-    document.querySelectorAll('a[href="#"]').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-        });
-    });
-
-    // Notificación de éxito para Netlify Forms
-    const form = document.querySelector('form[data-netlify]');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Enviar el formulario usando fetch para Netlify
-            const data = new FormData(form);
-            fetch('/', {
-                method: 'POST',
-                body: data
-            }).then(() => {
-                form.style.display = 'none';
-                document.getElementById('form-success').style.display = 'block';
-            }).catch(() => {
-                alert('Hubo un error al enviar el mensaje. Intenta nuevamente.');
-            });
-        });
-    }
-});
-
-// Función para actualizar dinámicamente las habilidades
-function updateSkillLevel(skillName, newPercentage) {
-    const skillItem = Array.from(document.querySelectorAll('.skill-info')).find(
-        item => item.querySelector('span').textContent === skillName
-    );
-    
-    if (skillItem) {
-        const percentageSpan = skillItem.querySelector('span:last-child');
-        const progressBar = skillItem.parentElement.querySelector('.skill-progress');
-        
-        percentageSpan.textContent = `${newPercentage}%`;
-        progressBar.style.width = `${newPercentage}%`;
-    }
-}
-
-// Función para agregar nuevos proyectos dinámicamente
-function addNewProject(projectData) {
-    const projectsGrid = document.querySelector('.projects-grid');
-    
-    const projectCard = document.createElement('div');
-    projectCard.className = 'project-card';
-    projectCard.innerHTML = `
-        <div class="project-image">
-            <img src="${projectData.image}" alt="${projectData.title}">
-        </div>
-        <div class="project-content">
-            <h3>${projectData.title}</h3>
-            <p>${projectData.description}</p>
-            <div class="project-tech">
-                ${projectData.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
-            </div>
-            <div class="project-links">
-                <a href="${projectData.github}" class="btn btn-small"><i class="fab fa-github"></i> Ver Código</a>
-                <a href="${projectData.demo}" class="btn btn-small btn-secondary"><i class="fas fa-external-link-alt"></i> Demo</a>
-            </div>
-        </div>
-    `;
-    
-    projectsGrid.appendChild(projectCard);
-}
-
-// Exportar funciones para uso externo
-window.portfolioFunctions = {
-    updateSkillLevel,
-    addNewProject
-}; 
-
-// Bloqueo de panel de desarrollador con mensaje de derechos reservados
-(function() {
-    function showDevWarning() {
-        alert('Este portafolio tiene derechos reservados. El acceso al panel de desarrollador está restringido.');
-    }
-    document.addEventListener('keydown', function(e) {
-        // F12
-        if (e.keyCode === 123) {
-            showDevWarning();
-            e.preventDefault();
-            return false;
-        }
-        // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-        if ((e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) ||
-            (e.ctrlKey && e.keyCode === 85)) {
-            showDevWarning();
-            e.preventDefault();
-            return false;
-        }
-    });
-    // No bloquear clic derecho
-})(); 
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.status);
+        form.reset();
+        statusEl.textContent = t('form.ok');
+        statusEl.classList.add('ok');
+      })
+      .catch(function () {
+        statusEl.textContent = t('form.fail');
+        statusEl.classList.add('err');
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+        submitLabel.textContent = t('form.send');
+      });
+  });
+})();
